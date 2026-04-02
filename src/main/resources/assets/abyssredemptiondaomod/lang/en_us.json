@@ -1,0 +1,13 @@
+{
+  "itemGroup.abyssredemptiondaomod": "Example Mod Tab",
+  "block.abyssredemptiondaomod.example_block": "Example Block",
+  "item.abyssredemptiondaomod.example_item": "Example Item",
+
+  "abyssredemptiondaomod.configuration.title": "Ab's Dao Mod Configs",
+  "abyssredemptiondaomod.configuration.section.abyssredemptiondaomod.common.toml": "Ab's Dao Mod Configs",
+  "abyssredemptiondaomod.configuration.section.abyssredemptiondaomod.common.toml.title": "Ab's Dao Mod Configs",
+  "abyssredemptiondaomod.configuration.items": "Item List",
+  "abyssredemptiondaomod.configuration.logDirtBlock": "Log Dirt Block",
+  "abyssredemptiondaomod.configuration.magicNumberIntroduction": "Magic Number Text",
+  "abyssredemptiondaomod.configuration.magicNumber": "Magic Number"
+}
