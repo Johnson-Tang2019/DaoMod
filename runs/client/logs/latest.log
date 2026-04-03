@@ -1,0 +1,98 @@
+[024月2026 21:11:26.577] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgeclientdev, --version, 21.1.222, --assetIndex, asset-index, --assetsDir, C:\Users\js\.gradle\caches\minecraft\assets, --gameDir, ., --fml.fmlVersion, 4.0.42, --fml.mcVersion, 1.21.1, --fml.neoForgeVersion, 21.1.222, --fml.neoFormVersion, 20240808.144430]
+[024月2026 21:11:26.582] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: JVM identified as Oracle Corporation Java HotSpot(TM) 64-Bit Server VM 21.0.9+7-LTS-338
+[024月2026 21:11:26.583] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 11.0.5+main.901c6ea8 starting: java version 21.0.9 by Oracle Corporation; OS Windows 11 arch amd64 version 10.0
+[024月2026 21:11:26.706] [main/INFO] [net.neoforged.fml.loading.ImmediateWindowHandler/]: Loading ImmediateWindowProvider fmlearlywindow
+[024月2026 21:11:26.873] [main/INFO] [EARLYDISPLAY/]: Trying GL version 4.6
+[024月2026 21:11:27.151] [main/INFO] [EARLYDISPLAY/]: Requested GL version 4.6 got version 4.6
+[024月2026 21:11:27.257] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=union:/C:/Users/js/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.2+mixin.0.8.7/2af2f021d8e02a0220dc27a7a72b4666d66d44ca/sponge-mixin-0.15.2+mixin.0.8.7.jar%23142!/ Service=ModLauncher Env=CLIENT
+[024月2026 21:11:27.420] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/SCAN]: Found mod file "neoforge-21.1.222.jar" [locator: neoforge devenv provider ([C:\Users\js\Documents\mod_project\DaoMod\.gradle\repositories\ng_dummy_ng\net\neoforged\neoforge\21.1.222\neoforge-21.1.222.jar])]
+[024月2026 21:11:27.457] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/SCAN]: Found mod file "neoforge-21.1.222.jar" [locator: neoforge devenv provider ([C:\Users\js\Documents\mod_project\DaoMod\.gradle\repositories\ng_dummy_ng\net\neoforged\neoforge\21.1.222\neoforge-21.1.222.jar])]
+[024月2026 21:11:27.473] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/SCAN]: Found mod file "main" [locator: userdev mods and services, reader: mod manifest]
+[024月2026 21:11:27.486] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/SCAN]: Found mod file "neoforge-21.1.222.jar" [locator: userdev mods and services, reader: mod manifest]
+[024月2026 21:11:27.516] [pool-2-thread-1/INFO] [EARLYDISPLAY/]: GL info: NVIDIA GeForce RTX 5070 Ti/PCIe/SSE2 GL version 4.6.0 NVIDIA 595.71, NVIDIA Corporation
+[024月2026 21:11:27.622] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/SCAN]: Found gamelibrary file "mixinextras-neoforge-0.5.3.jar" [locator: userdev mods and services, reader: mod manifest]
+[024月2026 21:11:27.736] [main/WARN] [net.neoforged.jarjar.selection.JarSelector/]: Attempted to select a dependency jar for JarJar which was passed in as source: library:mixinextras.neoforge. Using Mod File: C:\Users\js\.gradle\caches\modules-2\files-2.1\io.github.llamalad7\mixinextras-neoforge\0.5.3\a0919957808de97707c5fb4ce073e66aeef3e187\mixinextras-neoforge-0.5.3.jar
+[024月2026 21:11:27.737] [main/INFO] [net.neoforged.fml.loading.moddiscovery.locators.JarInJarDependencyLocator/]: Found 1 dependencies adding them to mods collection
+[024月2026 21:11:27.737] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/SCAN]: Found library file "net.neoforged.neoforge-coremods-21.1.222.jar" [parent: neoforge-21.1.222.jar, locator: jarinjar, reader: mod manifest]
+[024月2026 21:11:27.740] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/]: 
+     Mod List:
+		Name Version (Mod Id)
+
+		Ab's Dao Mod 1.0.0 (abyssredemptiondaomod)
+		Minecraft 1.21.1 (minecraft)
+		NeoForge 21.1.222 (neoforge)
+[024月2026 21:11:28.305] [main/INFO] [mixin/]: Compatibility level set to JAVA_21
+[024月2026 21:11:28.313] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgeclientdev' with arguments [--version, 21.1.222, --gameDir, ., --assetsDir, C:\Users\js\.gradle\caches\minecraft\assets, --assetIndex, asset-index]
+[024月2026 21:11:30.690] [Datafixer Bootstrap/INFO] [com.mojang.datafixers.DataFixerBuilder/]: 229 Datafixer optimizations took 345 milliseconds
+[024月2026 21:11:30.937] [pool-7-thread-1/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.3).
+[024月2026 21:11:35.910] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[024月2026 21:11:35.911] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
+[024月2026 21:11:35.915] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[024月2026 21:11:35.917] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[024月2026 21:11:35.918] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[024月2026 21:11:36.039] [Render thread/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/js/Documents/mod_project/DaoMod/.gradle/repositories/ng_dummy_ng/net/neoforged/neoforge/21.1.222/neoforge-21.1.222.jar%23195!/assets/.mcassetsroot' uses unexpected schema
+[024月2026 21:11:36.039] [Render thread/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/js/Documents/mod_project/DaoMod/.gradle/repositories/ng_dummy_ng/net/neoforged/neoforge/21.1.222/neoforge-21.1.222.jar%23195!/data/.mcassetsroot' uses unexpected schema
+[024月2026 21:11:36.097] [Render thread/INFO] [com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService/]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[024月2026 21:11:36.104] [Render thread/INFO] [net.minecraft.client.Minecraft/]: Setting user: Dev
+[024月2026 21:11:36.180] [Render thread/INFO] [net.minecraft.client.Minecraft/]: Backend library: LWJGL version 3.3.3+5
+[024月2026 21:11:36.415] [modloading-worker-0/INFO] [net.neoforged.neoforge.common.NeoForgeMod/NEOFORGE-MOD]: NeoForge mod loading, version 21.1.222, for MC 1.21.1
+[024月2026 21:11:37.064] [Render thread/INFO] [net.neoforged.neoforge.gametest.GameTestHooks/]: Enabled Gametest Namespaces: [abyssredemptiondaomod]
+[024月2026 21:11:37.151] [Render thread/INFO] [net.minecraft.server.packs.resources.ReloadableResourceManager/]: Reloading ResourceManager: vanilla, mod_resources, mod/neoforge, mod/abyssredemptiondaomod
+[024月2026 21:11:37.161] [Worker-Main-2/INFO] [com.abyssredemption.daomod.AbsDaoMod/]: HELLO FROM COMMON SETUP
+[024月2026 21:11:37.162] [Worker-Main-2/INFO] [com.abyssredemption.daomod.AbsDaoMod/]: DIRT BLOCK >> minecraft:dirt
+[024月2026 21:11:37.162] [Worker-Main-2/INFO] [com.abyssredemption.daomod.AbsDaoMod/]: The magic number is... 42
+[024月2026 21:11:37.163] [Worker-Main-2/INFO] [com.abyssredemption.daomod.AbsDaoMod/]: ITEM >> minecraft:iron_ingot
+[024月2026 21:11:37.306] [Worker-Main-12/INFO] [net.minecraft.client.gui.font.providers.UnihexProvider/]: Found unifont_jp_patch-15.1.05.hex, loading
+[024月2026 21:11:37.306] [Worker-Main-14/INFO] [net.minecraft.client.gui.font.providers.UnihexProvider/]: Found unifont_all_no_pua-15.1.05.hex, loading
+[024月2026 21:11:37.343] [Worker-Main-10/INFO] [com.abyssredemption.daomod.AbsDaoMod/]: HELLO FROM CLIENT SETUP
+[024月2026 21:11:37.343] [Worker-Main-10/INFO] [com.abyssredemption.daomod.AbsDaoMod/]: MINECRAFT NAME >> Dev
+[024月2026 21:11:37.805] [Worker-Main-7/WARN] [net.minecraft.client.resources.model.BlockStateModelLoader/]: Exception loading blockstate definition: 'abyssredemptiondaomod:blockstates/example_block.json' missing model for variant: 'abyssredemptiondaomod:example_block#'
+[024月2026 21:11:37.806] [Worker-Main-7/WARN] [net.minecraft.client.resources.model.ModelBakery/]: Unable to load model: 'abyssredemptiondaomod:item/example_item' referenced from: abyssredemptiondaomod:item/example_item: java.io.FileNotFoundException: abyssredemptiondaomod:models/item/example_item.json
+[024月2026 21:11:37.808] [Worker-Main-7/WARN] [net.minecraft.client.resources.model.ModelBakery/]: Unable to load model: 'abyssredemptiondaomod:item/example_block' referenced from: abyssredemptiondaomod:item/example_block: java.io.FileNotFoundException: abyssredemptiondaomod:models/item/example_block.json
+[024月2026 21:11:38.722] [Render thread/WARN] [net.minecraft.client.sounds.SoundEngine/]: Missing sound for event: minecraft:item.goat_horn.play
+[024月2026 21:11:38.723] [Render thread/WARN] [net.minecraft.client.sounds.SoundEngine/]: Missing sound for event: minecraft:entity.goat.screaming.horn_break
+[024月2026 21:11:38.782] [Render thread/INFO] [com.mojang.blaze3d.audio.Library/]: OpenAL initialized on device OpenAL Soft on 耳机 (SIMGOT EH500)
+[024月2026 21:11:38.782] [Render thread/INFO] [net.minecraft.client.sounds.SoundEngine/SOUNDS]: Sound engine started
+[024月2026 21:11:38.869] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 1024x512x4 minecraft:textures/atlas/blocks.png-atlas
+[024月2026 21:11:38.875] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x256x4 minecraft:textures/atlas/signs.png-atlas
+[024月2026 21:11:38.876] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
+[024月2026 21:11:38.876] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
+[024月2026 21:11:38.876] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 1024x1024x4 minecraft:textures/atlas/armor_trims.png-atlas
+[024月2026 21:11:38.877] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
+[024月2026 21:11:38.877] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 128x64x4 minecraft:textures/atlas/decorated_pot.png-atlas
+[024月2026 21:11:38.878] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
+[024月2026 21:11:38.878] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
+[024月2026 21:11:39.022] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x0 minecraft:textures/atlas/particles.png-atlas
+[024月2026 21:11:39.023] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x0 minecraft:textures/atlas/paintings.png-atlas
+[024月2026 21:11:39.023] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x128x0 minecraft:textures/atlas/mob_effects.png-atlas
+[024月2026 21:11:39.024] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 64x64x0 minecraft:textures/atlas/map_decorations.png-atlas
+[024月2026 21:11:39.024] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 1024x512x0 minecraft:textures/atlas/gui.png-atlas
+[024月2026 21:11:39.046] [Render thread/WARN] [net.minecraft.client.renderer.ShaderInstance/]: Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program.
+[024月2026 21:11:39.096] [Render thread/INFO] [net.neoforged.neoforge.client.entity.animation.json.AnimationLoader/]: Loaded 0 entity animations
+[024月2026 21:15:38.745] [Render thread/INFO] [net.minecraft.server.packs.resources.ReloadableResourceManager/]: Reloading ResourceManager: vanilla, mod_resources, mod/neoforge, mod/abyssredemptiondaomod
+[024月2026 21:15:38.749] [Worker-Main-23/INFO] [net.minecraft.client.gui.font.providers.UnihexProvider/]: Found unifont_all_no_pua-15.1.05.hex, loading
+[024月2026 21:15:38.749] [Worker-Main-18/INFO] [net.minecraft.client.gui.font.providers.UnihexProvider/]: Found unifont_jp_patch-15.1.05.hex, loading
+[024月2026 21:15:39.100] [Worker-Main-17/WARN] [net.minecraft.client.resources.model.BlockStateModelLoader/]: Exception loading blockstate definition: 'abyssredemptiondaomod:blockstates/example_block.json' missing model for variant: 'abyssredemptiondaomod:example_block#'
+[024月2026 21:15:39.102] [Worker-Main-17/WARN] [net.minecraft.client.resources.model.ModelBakery/]: Unable to load model: 'abyssredemptiondaomod:item/example_item' referenced from: abyssredemptiondaomod:item/example_item: java.io.FileNotFoundException: abyssredemptiondaomod:models/item/example_item.json
+[024月2026 21:15:39.105] [Worker-Main-17/WARN] [net.minecraft.client.resources.model.ModelBakery/]: Unable to load model: 'abyssredemptiondaomod:item/example_block' referenced from: abyssredemptiondaomod:item/example_block: java.io.FileNotFoundException: abyssredemptiondaomod:models/item/example_block.json
+[024月2026 21:15:39.378] [Render thread/WARN] [net.minecraft.client.sounds.SoundEngine/]: Missing sound for event: minecraft:item.goat_horn.play
+[024月2026 21:15:39.379] [Render thread/WARN] [net.minecraft.client.sounds.SoundEngine/]: Missing sound for event: minecraft:entity.goat.screaming.horn_break
+[024月2026 21:15:39.445] [Render thread/INFO] [com.mojang.blaze3d.audio.Library/]: OpenAL initialized on device OpenAL Soft on 耳机 (SIMGOT EH500)
+[024月2026 21:15:39.445] [Render thread/INFO] [net.minecraft.client.sounds.SoundEngine/SOUNDS]: Sound engine started
+[024月2026 21:15:39.483] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 1024x512x4 minecraft:textures/atlas/blocks.png-atlas
+[024月2026 21:15:39.485] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x256x4 minecraft:textures/atlas/signs.png-atlas
+[024月2026 21:15:39.485] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
+[024月2026 21:15:39.485] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
+[024月2026 21:15:39.486] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 1024x1024x4 minecraft:textures/atlas/armor_trims.png-atlas
+[024月2026 21:15:39.487] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
+[024月2026 21:15:39.487] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 128x64x4 minecraft:textures/atlas/decorated_pot.png-atlas
+[024月2026 21:15:39.487] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
+[024月2026 21:15:39.487] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
+[024月2026 21:15:39.494] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x0 minecraft:textures/atlas/particles.png-atlas
+[024月2026 21:15:39.494] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x0 minecraft:textures/atlas/paintings.png-atlas
+[024月2026 21:15:39.494] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x128x0 minecraft:textures/atlas/mob_effects.png-atlas
+[024月2026 21:15:39.495] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 64x64x0 minecraft:textures/atlas/map_decorations.png-atlas
+[024月2026 21:15:39.495] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 1024x512x0 minecraft:textures/atlas/gui.png-atlas
+[024月2026 21:15:39.507] [Render thread/WARN] [net.minecraft.client.renderer.ShaderInstance/]: Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program.
+[024月2026 21:15:39.534] [Render thread/INFO] [net.neoforged.neoforge.client.entity.animation.json.AnimationLoader/]: Loaded 0 entity animations
+[024月2026 21:15:44.936] [Render thread/INFO] [net.minecraft.client.Minecraft/]: Stopping!

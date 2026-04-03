@@ -1,4 +1,4 @@
 package com.abyssredemption.daomod.util;
 
-public class PlayerUtil {
+public class CultivationHelper {
 }
