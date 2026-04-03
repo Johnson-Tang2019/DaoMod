@@ -27,7 +27,7 @@ public class AbsDaoMod {
                 (payload, context) -> {
                     context.enqueueWork(() -> {
                         context.player().setData(ModAttachments.CULTIVATION,
-                                new com.abyssredemption.daomod.attachment.CultivationData(payload.realm(), payload.qi()));
+                                new com.abyssredemption.daomod.attachment.CultivationData(payload.realm(), payload.qi(), payload.sectOrthodoxy()));
                     });
                 }
         );
