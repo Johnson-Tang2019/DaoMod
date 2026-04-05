@@ -10,7 +10,6 @@ import net.minecraft.network.chat.Component;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.RenderGuiEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
 
 @EventBusSubscriber(modid = AbsDaoMod.MODID, value = Dist.CLIENT)
@@ -30,7 +29,7 @@ public class CultivationGui {
 
         int guiLeft = inventoryScreen.getGuiLeft() + 130;
         int guiTop = inventoryScreen.getGuiTop() + 60;
-        int color = 0x16153e;
+        int color = 0x171748;
 
         graphics.pose().pushPose();
         graphics.pose().translate(0, 0, 2000);
