@@ -1,13 +1,13 @@
 {
-  "itemGroup.abyssredemptiondaomod": "Example Mod Tab",
-  "block.abyssredemptiondaomod.example_block": "Example Block",
-  "item.abyssredemptiondaomod.example_item": "Example Item",
+  "gui.daomod.qi" : "qi: %s",
 
-  "abyssredemptiondaomod.configuration.title": "Ab's Dao Mod Configs",
-  "abyssredemptiondaomod.configuration.section.abyssredemptiondaomod.common.toml": "Ab's Dao Mod Configs",
-  "abyssredemptiondaomod.configuration.section.abyssredemptiondaomod.common.toml.title": "Ab's Dao Mod Configs",
-  "abyssredemptiondaomod.configuration.items": "Item List",
-  "abyssredemptiondaomod.configuration.logDirtBlock": "Log Dirt Block",
-  "abyssredemptiondaomod.configuration.magicNumberIntroduction": "Magic Number Text",
-  "abyssredemptiondaomod.configuration.magicNumber": "Magic Number"
+  "gui.daomod.realm0" : "Qi Gathering",
+  "gui.daomod.realm1" : "Foundation Establishment",
+  "gui.daomod.realm2" : "Golden Core",
+  "gui.daomod.realm3" : "Nascent Soul",
+  "gui.daomod.realm4" : "Spirit Transformation",
+  "gui.daomod.realm5" : "Void Refinement",
+  "gui.daomod.realm6" : "Dao Integration",
+  "gui.daomod.realm7" : "Grand Ascension",
+  "gui.daomod.realm8" : "Heavenly Tribulation"
 }

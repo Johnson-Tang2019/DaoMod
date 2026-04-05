@@ -1,0 +1,14 @@
+{
+  "gui.daomod.qi" : "炁: %s",
+
+  "gui.daomod.realm0" : "炼气",
+  "gui.daomod.realm1" : "筑基",
+  "gui.daomod.realm2" : "金丹",
+  "gui.daomod.realm3" : "元婴",
+  "gui.daomod.realm4" : "化神",
+  "gui.daomod.realm5" : "炼虚",
+  "gui.daomod.realm6" : "合体",
+  "gui.daomod.realm7" : "大乘",
+  "gui.daomod.realm8" : "渡劫"
+
+}
