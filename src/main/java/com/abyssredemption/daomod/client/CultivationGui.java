@@ -29,7 +29,7 @@ public class CultivationGui {
 
         int guiLeft = inventoryScreen.getGuiLeft() + 130;
         int guiTop = inventoryScreen.getGuiTop() + 60;
-        int color = 0x171748;
+        int color = 0x171749;
 
         graphics.pose().pushPose();
         graphics.pose().translate(0, 0, 2000);
