@@ -21,7 +21,6 @@ public class CultivationGui {
         if (!(event.getScreen() instanceof InventoryScreen inventoryScreen)) {
             return;
         }
-
         if(mc.player == null) return;
 
         CultivationData data = mc.player.getData(ModAttachments.CULTIVATION);
@@ -29,17 +28,17 @@ public class CultivationGui {
 
         int guiLeft = inventoryScreen.getGuiLeft() + 130;
         int guiTop = inventoryScreen.getGuiTop() + 60;
-        int color = 0x171748;
+        int color = 0xff67d1;
 
         graphics.pose().pushPose();
         graphics.pose().translate(0, 0, 2000);
 
-        Component qiLabel = Component.translatable("gui.daomod.qi", data.qi());
+        Component qiLabel = Component.translatable("gui.daomod.qi", data.getQi());
 
-        Component realmText = getRealmName(data.realm());
+        Component realmText = getStageName(data.getStage(), data.getRealm());
 
-        graphics.drawString(mc.font, realmText, guiLeft, guiTop, color);
-        graphics.drawString(mc.font, qiLabel, guiLeft, guiTop + 10, color);
+        graphics.drawString(mc.font, realmText, guiLeft, guiTop, color, false);
+        graphics.drawString(mc.font, qiLabel, guiLeft, guiTop + 10, color, false);
         System.out.println("Debug: GUI is Rendering!");
     }
 
@@ -57,4 +56,18 @@ public class CultivationGui {
         };
     }
 
+    private static Component getStageName(int stage, int realm) {
+        if(stage == 9) return Component.translatable("gui.daomod.stage9");
+        return switch (stage) {
+            case 1 -> Component.translatable("gui.daomod.stage1", getRealmName(realm));
+            case 2 -> Component.translatable("gui.daomod.stage2", getRealmName(realm));
+            case 3 -> Component.translatable("gui.daomod.stage3", getRealmName(realm));
+            case 4 -> Component.translatable("gui.daomod.stage4", getRealmName(realm));
+            case 5 -> Component.translatable("gui.daomod.stage5", getRealmName(realm));
+            case 6 -> Component.translatable("gui.daomod.stage6", getRealmName(realm));
+            case 7 -> Component.translatable("gui.daomod.stage7", getRealmName(realm));
+            case 8 -> Component.translatable("gui.daomod.stage8", getRealmName(realm + 1));
+            default -> Component.translatable("gui.daomod.stage0", getRealmName(realm));
+        };
+    }
 }

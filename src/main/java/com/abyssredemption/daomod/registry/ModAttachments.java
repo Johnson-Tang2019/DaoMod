@@ -13,7 +13,9 @@ public class ModAttachments {
             DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, "daomod");
 
     public static final Supplier<AttachmentType<CultivationData>> CULTIVATION =
-            ATTACHMENT_TYPES.register("cultivation", () -> AttachmentType.builder(() -> CultivationData.DEFAULT)
+            ATTACHMENT_TYPES.register("cultivation", () -> AttachmentType.builder(() ->
+                            new CultivationData(0, 0, 0, 0)
+                    )
                     .serialize(CultivationData.CODEC)
                     .copyOnDeath()
                     .build());
