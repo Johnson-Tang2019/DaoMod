@@ -19,6 +19,8 @@
   "gui.daomod.stage6" : "%s六重",
   "gui.daomod.stage7" : "%s七重",
   "gui.daomod.stage8" : "半步%s",
-  "gui.daomod.stage9" : "巅峰"
+  "gui.daomod.stage9" : "巅峰",
+
+  "item.daomod.soul_sword": "玄天灵剑"
 
 }

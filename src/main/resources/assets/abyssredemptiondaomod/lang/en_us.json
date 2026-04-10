@@ -9,5 +9,7 @@
   "gui.daomod.realm5" : "Void Refinement",
   "gui.daomod.realm6" : "Dao Integration",
   "gui.daomod.realm7" : "Grand Ascension",
-  "gui.daomod.realm8" : "Heavenly Tribulation"
+  "gui.daomod.realm8" : "Heavenly Tribulation",
+
+  "item.daomod.soul_sword": "Soul Sword"
 }

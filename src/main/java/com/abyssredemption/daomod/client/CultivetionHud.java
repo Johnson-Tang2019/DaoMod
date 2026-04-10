@@ -34,13 +34,16 @@ public class CultivetionHud {
 
         // 1. 绘制背景条（黑色半透明）
         int barWidth = 81;
-        graphics.fill(x, y, x + barWidth, y + 5, 0x80000000);
+        graphics.fill(x, y, x + barWidth, y + 5, 0x161546aa);
 
-        float ratio = (float) (data.getQi() / CultivationData.getMaxQi(data.getRealm(), data.getStage()));
+        float ratio =  ((float)data.getQi() / CultivationData.getMaxQi(data.getRealm(), data.getStage()));
         int fillWidth = (int) (barWidth * ratio);
         if (fillWidth > 0) {
-            graphics.fill(x, y, x + fillWidth, y + 5, 0xFF55FFFF);
+            graphics.fill(x, y, x + fillWidth, y + 5, 0x2129ffff);
+            System.out.println("Gui drawn: " + ratio);
+            System.out.println("Max Qi: " + CultivationData.getMaxQi(data.getRealm(), data.getStage()));
         }
+
 
     }
 

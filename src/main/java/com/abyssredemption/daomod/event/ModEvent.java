@@ -4,8 +4,11 @@ import com.abyssredemption.daomod.AbsDaoMod;
 import com.abyssredemption.daomod.attachment.CultivationData;
 import com.abyssredemption.daomod.network.CultivationPayload;
 import com.abyssredemption.daomod.registry.ModAttachments;
+import com.abyssredemption.daomod.registry.ModItems;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 @EventBusSubscriber(modid = AbsDaoMod.MODID)
@@ -35,6 +38,18 @@ public class ModEvent {
                             data.getStage()
                     ));
                 }
+            }
+        }
+    }
+
+
+    @EventBusSubscriber(modid = AbsDaoMod.MODID)
+    public class ModClientEvents {
+        @SubscribeEvent
+        public static void addCreative(BuildCreativeModeTabContentsEvent event) {
+            // 比如把灵剑添加到“战斗”栏
+            if (event.getTabKey() == CreativeModeTabs.COMBAT) {
+                event.accept(ModItems.SOUL_SWORD);
             }
         }
     }
