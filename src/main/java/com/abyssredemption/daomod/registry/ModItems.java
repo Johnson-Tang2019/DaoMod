@@ -12,7 +12,8 @@ public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(AbsDaoMod.MODID);
 
     // 2. 注册你的灵剑
-    public static final DeferredItem<SoulSwordItem> SOUL_SWORD = ITEMS.register("soul_sword",
+    public static final DeferredItem<SoulSwordItem> SOUL_SWORD =
+            ITEMS.register("soul_sword",
             () -> new SoulSwordItem(Tiers.DIAMOND, new Item.Properties()
                     .attributes(SoulSwordItem.createAttributes(Tiers.DIAMOND, 3, -2.4f))
                     .stacksTo(1))); // 设置不可堆叠

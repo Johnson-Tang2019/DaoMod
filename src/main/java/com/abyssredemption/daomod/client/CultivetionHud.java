@@ -40,8 +40,8 @@ public class CultivetionHud {
         int fillWidth = (int) (barWidth * ratio);
         if (fillWidth > 0) {
             graphics.fill(x, y, x + fillWidth, y + 5, 0x2129ffff);
-            System.out.println("Gui drawn: " + ratio);
-            System.out.println("Max Qi: " + CultivationData.getMaxQi(data.getRealm(), data.getStage()));
+//            System.out.println("Gui drawn: " + ratio);
+//            System.out.println("Max Qi: " + CultivationData.getMaxQi(data.getRealm(), data.getStage()));
         }
 
 

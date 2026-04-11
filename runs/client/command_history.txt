@@ -4,3 +4,11 @@
 /dao qi set @a 0
 /give @a abyssredemptiondaomod:soul_sword
 /dao qi set @a 100
+/dao realm set @a 8
+/dao realm set @a 1
+/dao qi set 0
+/dao qi set @a 0
+/dao realm set @a 0
+/dao qi set @a 0
+/dao realm set @a 8
+/time set day
