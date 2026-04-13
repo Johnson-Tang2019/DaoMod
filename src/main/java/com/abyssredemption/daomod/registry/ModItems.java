@@ -18,5 +18,7 @@ public class ModItems {
                     .attributes(SoulSwordItem.createAttributes(Tiers.DIAMOND, 3, -2.4f))
                     .stacksTo(1))); // 设置不可堆叠
 
+    public static final DeferredItem<Item> PUTUAN_ITEM =
+            ITEMS.registerSimpleBlockItem("putuan", ModBlocks.PUTUAN);
 
 }

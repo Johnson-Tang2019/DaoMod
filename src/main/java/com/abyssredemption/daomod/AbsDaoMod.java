@@ -1,6 +1,7 @@
 package com.abyssredemption.daomod;
 
 import com.abyssredemption.daomod.registry.ModAttachments;
+import com.abyssredemption.daomod.registry.ModBlocks;
 import com.abyssredemption.daomod.registry.ModEntities;
 import com.abyssredemption.daomod.registry.ModItems;
 import net.neoforged.bus.api.IEventBus;
@@ -17,6 +18,7 @@ public class AbsDaoMod {
         ModEntities.ENTITIES.register(modEventBus);
         ModAttachments.ATTACHMENT_TYPES.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
+        ModBlocks.BLOCKS.register(modEventBus);
 
     }
 
