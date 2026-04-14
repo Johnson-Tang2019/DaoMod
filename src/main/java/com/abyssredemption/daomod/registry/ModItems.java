@@ -2,6 +2,7 @@ package com.abyssredemption.daomod.registry;
 
 import com.abyssredemption.daomod.AbsDaoMod;
 import com.abyssredemption.daomod.item.SoulSwordItem;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tiers;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -18,7 +19,7 @@ public class ModItems {
                     .attributes(SoulSwordItem.createAttributes(Tiers.DIAMOND, 3, -2.4f))
                     .stacksTo(1))); // 设置不可堆叠
 
-    public static final DeferredItem<Item> PUTUAN_ITEM =
+    public static final DeferredItem<BlockItem> PUTUAN_ITEM =
             ITEMS.registerSimpleBlockItem("putuan", ModBlocks.PUTUAN);
 
 }
