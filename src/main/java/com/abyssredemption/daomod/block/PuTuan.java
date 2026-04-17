@@ -41,7 +41,7 @@ public class PuTuan extends Block {
             }
 
             // 2. 创建一个隐形的盔甲架
-            ArmorStand seat = new ArmorStand(level, pos.getX() + 0.5, pos.getY() - 0.5, pos.getZ() + 0.5);
+            ArmorStand seat = new ArmorStand(level, pos.getX() + 0.5, pos.getY() - 1, pos.getZ() + 0.5);
             seat.setInvisible(true);    // 隐形
             seat.setNoGravity(true);    // 禁重力
             seat.addTag("daomod_seat"); // 打上标签
