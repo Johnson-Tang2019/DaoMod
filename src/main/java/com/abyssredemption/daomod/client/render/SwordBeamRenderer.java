@@ -37,8 +37,8 @@ public class SwordBeamRenderer extends EntityRenderer<SwordBeamEntity> {
 
         // 2. 动态效果：随时间缩放和淡出（模拟灵气消散）
         float lifeTime = entity.tickCount + partialTick;
-        float scale = 1.0F + lifeTime * 0.05F; // 越飞越大
-        float alpha = Mth.clamp(1.0F - lifeTime / 40.0F, 0.0F, 1.0F); // 2秒后完全淡出
+        float scale = 1.0F;
+        float alpha = Mth.clamp(1.0F / 40.0F, 0.0F, 1.0F);
         poseStack.scale(scale * 1.5f, scale * 0.5f, scale); // 扁平化，看起来像月牙
 
         PoseStack.Pose lastPose = poseStack.last();

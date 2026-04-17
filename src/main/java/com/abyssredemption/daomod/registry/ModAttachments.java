@@ -14,7 +14,7 @@ public class ModAttachments {
 
     public static final Supplier<AttachmentType<CultivationData>> CULTIVATION =
             ATTACHMENT_TYPES.register("cultivation", () -> AttachmentType.builder(() ->
-                            new CultivationData(0, 0, 0, 0)
+                            new CultivationData(0, 0, 0, 0, 0)
                     )
                     .serialize(CultivationData.CODEC)
                     .copyOnDeath()

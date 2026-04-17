@@ -1,5 +1,6 @@
 package com.abyssredemption.daomod.entity;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
@@ -7,6 +8,8 @@ import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 
 public class SwordBeamEntity extends AbstractHurtingProjectile implements ItemSupplier {
@@ -34,11 +37,25 @@ public class SwordBeamEntity extends AbstractHurtingProjectile implements ItemSu
     }
 
     @Override
+    protected void onHitBlock(BlockHitResult result) {
+        super.onHitBlock(result);
+        if (!this.level().isClientSide) {
+            BlockPos pos = result.getBlockPos();
+            BlockState state = this.level().getBlockState(pos);
+
+
+            //方案 B：如果你想要小规模的剑气爆炸效果（威力设为 1.0 左右）
+            this.level().explode(this, pos.getX(), pos.getY(), pos.getZ(), 1.0F, Level.ExplosionInteraction.BLOCK);
+
+            this.discard(); // 剑气撞墙后消失
+        }
+    }
+
+    @Override
     protected boolean shouldBurn() { return false; } // 剑气不带火
 
     @Override
     public ItemStack getItem() {
-        // 暂时借用“烈焰粉”或“青金石”的贴图作为剑气的外观，你可以换成任何物品
         return new ItemStack(Items.FLINT);
     }
 }

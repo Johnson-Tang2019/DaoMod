@@ -39,6 +39,7 @@ public class CultivationGui {
 
         graphics.drawString(mc.font, realmText, guiLeft, guiTop, color, false);
         graphics.drawString(mc.font, qiLabel, guiLeft, guiTop + 10, color, false);
+        graphics.drawString(mc.font, data.getRealmProgress() + "", guiLeft, guiTop + 20, color, false);
     }
 
     private static Component getRealmName(int realm) {

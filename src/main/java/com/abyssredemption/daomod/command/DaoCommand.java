@@ -81,6 +81,32 @@ public class DaoCommand {
                                 )
                 )
         );
+        dispatcher.register(Commands.literal("dao").requires(source -> source.hasPermission(2)) // 需要管理员权限
+                .then(Commands.literal("realmProgress").
+                        then(Commands.literal("set")
+                                .then(Commands.argument("targets", EntityArgument.players())
+                                        .then(Commands.argument("realmProgress", IntegerArgumentType.integer(0))
+                                                .executes(context -> updateRealmProgress(
+                                                        context.getSource(),
+                                                        EntityArgument.getPlayers(context, "targets"),
+                                                        IntegerArgumentType.getInteger(context, "realmProgress"),
+                                                        false))
+                                        )
+                                )
+                        )
+                        .then(Commands.literal("add")
+                                .then(Commands.argument("targets", EntityArgument.players())
+                                        .then(Commands.argument("realmProgress", IntegerArgumentType.integer(0))
+                                                .executes(context -> updateRealmProgress(
+                                                        context.getSource(),
+                                                        EntityArgument.getPlayers(context, "targets"),
+                                                        IntegerArgumentType.getInteger(context, "realmProgress"),
+                                                        true))
+                                        )
+                                )
+                        )
+                )
+        );
     }
 
     private static int updateQi(CommandSourceStack source, java.util.Collection<ServerPlayer> targets, long amount, boolean isAdd) {
@@ -107,7 +133,8 @@ public class DaoCommand {
                     data.getRealm(),
                     data.getQi(),
                     data.getSectOrthodoxy(),
-                    data.getStage()
+                    data.getStage(),
+                    data.getRealmProgress()
             ));
 
             long finalNewQi = newQi;
@@ -140,10 +167,46 @@ public class DaoCommand {
                     data.getRealm(),
                     data.getQi(),
                     data.getSectOrthodoxy(),
-                    data.getStage()
+                    data.getStage(),
+                    data.getRealmProgress()
             ));
 
             int finalNewRealm = newRealm;
+            source.sendSuccess(() -> Component.literal("已为 " + player.getScoreboardName() + " 设置境界为: " + finalNewRealm), true);
+        }
+        return targets.size();
+    }
+
+    private static int updateRealmProgress(CommandSourceStack source, java.util.Collection<ServerPlayer> targets,
+                                           int amount, boolean isAdd) {
+        for (ServerPlayer player : targets) {
+            var data = player.getData(ModAttachments.CULTIVATION);
+
+            int newRealmProgress;
+            if (isAdd) {
+                newRealmProgress = data.getRealmProgress() + amount;
+            } else {
+                newRealmProgress = amount;
+            }
+
+            // 限制不超过最大值
+
+            newRealmProgress = Math.min(newRealmProgress, 99);
+
+            // 1. 更新服务端数据
+            data.setRealmProgress(newRealmProgress);
+            player.setData(ModAttachments.CULTIVATION, data);
+
+            // 2. 发送同步包给客户端 (必须手动同步，UI 才会变)
+            player.connection.send(new CultivationPayload(
+                    data.getRealm(),
+                    data.getQi(),
+                    data.getSectOrthodoxy(),
+                    data.getStage(),
+                    data.getRealmProgress()
+            ));
+
+            int finalNewRealm = newRealmProgress;
             source.sendSuccess(() -> Component.literal("已为 " + player.getScoreboardName() + " 设置境界为: " + finalNewRealm), true);
         }
         return targets.size();

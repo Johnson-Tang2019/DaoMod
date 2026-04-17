@@ -73,8 +73,8 @@ public class SoulSwordItem extends SwordItem {
                 // 扣除并同步
                 data.setQi(data.getQi() - cost);
                 player.setData(ModAttachments.CULTIVATION, data);
-                serverPlayer.connection.send(new CultivationPayload(data.getRealm(), data.getQi(), data.getSectOrthodoxy(), data.getStage()));
-
+                serverPlayer.connection.send(new CultivationPayload(data.getRealm(), data.getQi(), data.getSectOrthodoxy(),
+                        data.getStage(), data.getRealmProgress()));
                 // 生成剑气实体
                 shootBeam(level, serverPlayer, seconds);
             } else {

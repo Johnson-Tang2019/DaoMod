@@ -1,3 +1,6 @@
 {
-  "parent": "abyssredemptiondaomod:block/putuan"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "abyssredemptiondaomod:block/putuan"
+  }
 }

@@ -7,7 +7,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 
-public record CultivationPayload(int realm, long qi, int sectOrthodoxy, int stage) implements CustomPacketPayload {
+public record CultivationPayload(int realm, long qi, int sectOrthodoxy, int stage, int realmProgress) implements CustomPacketPayload {
     public static final Type<CultivationPayload> TYPE =
             new Type<>(ResourceLocation.fromNamespaceAndPath(AbsDaoMod.MODID, "cultivation_sync"));
 
@@ -16,6 +16,7 @@ public record CultivationPayload(int realm, long qi, int sectOrthodoxy, int stag
             ByteBufCodecs.VAR_LONG, CultivationPayload::qi,
             ByteBufCodecs.VAR_INT, CultivationPayload::sectOrthodoxy,
             ByteBufCodecs.VAR_INT, CultivationPayload::stage,
+            ByteBufCodecs.VAR_INT, CultivationPayload::realmProgress,
             CultivationPayload::new
     );
 

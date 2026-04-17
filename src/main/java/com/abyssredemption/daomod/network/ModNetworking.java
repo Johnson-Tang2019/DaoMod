@@ -34,7 +34,8 @@ public class ModNetworking {
                         payload.realm(),
                         payload.qi(), // 如果你类里是double，记得强转
                         payload.sectOrthodoxy(),
-                        payload.stage()
+                        payload.stage(),
+                        payload.realmProgress()
                 );
                 // 更新客户端 Attachment
                 mc.player.setData(ModAttachments.CULTIVATION, newData);
