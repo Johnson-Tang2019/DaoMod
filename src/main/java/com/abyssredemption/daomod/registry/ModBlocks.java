@@ -5,6 +5,7 @@ import com.abyssredemption.daomod.block.PuTuan;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -15,6 +16,7 @@ public class ModBlocks {
     // 2. 之后才能使用 BLOCKS.register
     public static final DeferredBlock<Block> PUTUAN = BLOCKS.register("putuan",
             () -> new PuTuan(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_YELLOW)
                     .strength(0.5f)
                     .sound(SoundType.WOOL)
                     .noOcclusion()));
