@@ -1,25 +1,140 @@
+# 道 Mod (Dao Mod) — 修仙模组
 
-Installation information
-=======
+一个基于 Minecraft NeoForge 的修仙模组，添加了境界修炼、炁（灵气）、丹药、灵剑等系统。
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+## 📦 安装
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+1. 确保安装了 **NeoForge 1.21.1**
+2. 下载模组 jar 文件放入 `.minecraft/mods` 目录
+3. 启动游戏
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+## 🧪 模组内容
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
+### 🗺️ 修炼境界（Realm）
 
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+| 等级 | 名称 | 描述 | 寿命 |
+|------|------|------|------|
+| 0 | 炼气 | 感知天地灵气，开辟丹田，引气入体 | 120 年 |
+| 1 | 筑基 | 灵气化液，铸就道基。可御剑飞行，辟谷不食 | 300 年 |
+| 2 | 金丹 | 结成混元金丹。一粒金丹吞入腹，始知我命不由天 | 500 年 |
+| 3 | 元婴 | 丹破生婴，拥有"第二性命" | 1000 年 |
+| 4 | 化神 | 神魂与天地共鸣，法相显化 | 3000 年 |
+| 5 | 炼虚 | 领悟法则残片，念动瞬息万里 | 8000 年 |
+| 6 | 合体 | 元神肉身完美融合，法相天地 | 20000 年 |
+| 7 | 大乘 | 仙体初成，凡圣之别 | 50000 年 |
+| 8 | 渡劫 | 迎接九天神雷洗礼，成则飞升，败则飞灰 | - |
+
+### 🔋 炁（Qi）
+
+玩家每 5 秒自动恢复炁（上限为当前境界最大值）：
+
+| 境界 | 炁范围 |
+|------|--------|
+| 炼气 | 10 ~ 90 |
+| 筑基 | 100 ~ 900 |
+| 金丹 | 1000 ~ 9000 |
+| 元婴 | 10000 ~ 90000 |
+| 化神 | 100000 ~ 900000 |
+| 炼虚 | 1000000 ~ 9000000 |
+| 合体 | 10000000 ~ 90000000 |
+| 大乘 | 100000000 ~ 900000000 |
+| 渡劫 | 1000000000 ~ 900000000 |
+
+### 🎯 小境界（Stage）
+
+每个大境界包含 9 个小境界：
+- **0 ~ 7**：一重 ~ 八重
+- **8**：半步（突破预备阶段）
+
+### 📈 修炼进度（Realm Progress）
+
+- 范围：0 ~ 99
+- 进度满 100 自动突破到下一小境界
+- 小境界满 9 自动突破到下一大境界
+
+---
+
+## ⚔️ 物品
+
+### 🗡️ 玄天灵剑（Soul Sword）
+
+| 属性 | 值 |
+|------|-----|
+| 材质 | 钻石级 |
+| 伤害 | 钻石剑 + 3 |
+| 攻速 | 慢 |
+| 不可堆叠 | 是 |
+
+右键释放**剑气**（Sword Beam）：
+- 发射弧形剑气实体
+- 对路径上的实体造成伤害
+- 每次消耗 10 炁
+- 炁不足时无法释放
+
+### 💊 丹药（Dan）
+
+**效果：**
+- 无正面药水效果，仅回复 1 点饥饿值
+- **修为突破**：食用后小境界（stage）+1
+
+**丹毒机制（5 层）：**
+
+| 层数 | 效果 |
+|------|------|
+| 第 1 ~ 4 层 | 显示"丹毒"状态图标（紫色） |
+| **第 5 层 ⚠** | **丹毒反噬**（深红色图标）持续 10 分钟 |
+
+**丹毒反噬期间：**
+- ❌ 无法服用丹药
+- ❌ 打坐无法增加修炼进度
+- ✅ 反噬结束后丹毒重置为 0
+
+### 🟤 蒲团（Prayer Mat）
+
+坐上去打坐，每 5 秒增加 1 点修炼进度。放置在地上右键即可坐下。
+
+---
+
+## 🎮 指令
+
+| 指令 | 功能 |
+|------|------|
+| `/dao get` | 查看当前修炼数据 |
+| `/dao set realm <0~8>` | 设置大境界 |
+| `/dao set stage <0~8>` | 设置小境界 |
+| `/dao set progress <0~99>` | 设置修炼进度 |
+| `/dao set qi <值>` | 设置炁量 |
+
+---
+
+## 🖥️ HUD 界面
+
+玩家屏幕左上角显示：
+- **境界名称**（如：炼气 / 筑基 / ...）
+- **小境界**（如：一重 / 二重 / ...）
+- **炁量**（当前值 / 最大值）
+- **修炼进度**（0 ~ 99）
+
+---
+
+## 🧬 自定义状态效果
+
+| 效果 ID | 名称 | 说明 |
+|---------|------|------|
+| `dan_du` | 丹毒 | 显示层数图标，无实际伤害 |
+| `dan_du_fan_shi` | 丹毒反噬 | 锁定修为增长，禁止服丹 |
+
+---
+
+## 🏗️ 技术栈
+
+- Minecraft 版本：**1.21.1**
+- 模组框架：**NeoForge**
+- 开发工具：**IntelliJ IDEA / Eclipse**
+- 构建系统：**Gradle**
+
+---
+
+## 📄 许可
+
+本项目基于 NeoForge MDK 模板构建，遵循 MIT 许可证。
