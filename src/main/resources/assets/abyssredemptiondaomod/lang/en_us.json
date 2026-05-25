@@ -11,5 +11,11 @@
   "gui.daomod.realm7" : "Grand Ascension",
   "gui.daomod.realm8" : "Heavenly Tribulation",
 
-  "item.abyssredemptiondaomod.soul_sword": "§dSoul Sword"
+  "item.abyssredemptiondaomod.soul_sword": "§dSoul Sword",
+
+  "item.abyssredemptiondaomod.dan": "§eDan",
+
+  "block.abyssredemptiondaomod.putuan": "Straw Prayer Mat",
+
+  "creativetab.abyssredemptiondaomod.dao_tab": "Dao"
 }

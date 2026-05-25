@@ -4,17 +4,14 @@ import com.abyssredemption.daomod.AbsDaoMod;
 import com.abyssredemption.daomod.attachment.CultivationData;
 import com.abyssredemption.daomod.network.CultivationPayload;
 import com.abyssredemption.daomod.registry.ModAttachments;
-import com.abyssredemption.daomod.registry.ModItems;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 @EventBusSubscriber(modid = AbsDaoMod.MODID)
@@ -34,7 +31,7 @@ public class ModEvent {
                 int recoveryAmount = (int) (0.1f * maxQi);
                 long nextQi = Math.min(currentQi + recoveryAmount, maxQi);
                 data.setQi(nextQi);
-                System.out.println("recover qi! qi:" + data.getQi());
+                System.out.println( "recover qi! qi:" + data.getQi());
                 player.setData(ModAttachments.CULTIVATION, data);
                 if (player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
                     serverPlayer.connection.send(new CultivationPayload(
@@ -61,7 +58,7 @@ public class ModEvent {
             // 仅在服务器端计算，每 5 秒（100 Ticks）触发一次
             if (!level.isClientSide && player.tickCount % 100 == 0) {
 
-                // 检查玩家是否正骑在“蒲团座位”上
+                // 检查玩家是否正骑在蒲团座位上
                 if (player.getVehicle() instanceof ArmorStand seat && seat.getTags().contains("daomod_seat")) {
 
                     // 1. 增加境界进度 (这里替换为你自己的数据处理逻辑)
@@ -95,17 +92,6 @@ public class ModEvent {
                         data.getStage(),
                         data.getRealmProgress()
                 ));
-            }
-        }
-    }
-
-    @EventBusSubscriber(modid = AbsDaoMod.MODID)
-    public class ModClientEvents {
-        @SubscribeEvent
-        public static void addCreative(BuildCreativeModeTabContentsEvent event) {
-            // 比如把灵剑添加到“战斗”栏
-            if (event.getTabKey() == CreativeModeTabs.COMBAT) {
-                event.accept(ModItems.SOUL_SWORD);
             }
         }
     }

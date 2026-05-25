@@ -45,7 +45,7 @@ public class SwordBeamEntity extends AbstractHurtingProjectile implements ItemSu
 
 
             //方案 B：如果你想要小规模的剑气爆炸效果（威力设为 1.0 左右）
-            this.level().explode(this, pos.getX(), pos.getY(), pos.getZ(), 1.0F, Level.ExplosionInteraction.BLOCK);
+            this.level().explode(this, pos.getX(), pos.getY(), pos.getZ(), 8.0F, Level.ExplosionInteraction.BLOCK);
 
             this.discard(); // 剑气撞墙后消失
         }

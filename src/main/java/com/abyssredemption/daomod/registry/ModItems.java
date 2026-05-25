@@ -1,6 +1,7 @@
 package com.abyssredemption.daomod.registry;
 
 import com.abyssredemption.daomod.AbsDaoMod;
+import com.abyssredemption.daomod.item.DanItem;
 import com.abyssredemption.daomod.item.SoulSwordItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -22,4 +23,8 @@ public class ModItems {
     public static final DeferredItem<BlockItem> PUTUAN_ITEM =
             ITEMS.registerSimpleBlockItem("putuan", ModBlocks.PUTUAN);
 
+    // 3. 注册丹药
+    public static final DeferredItem<DanItem> DAN =
+            ITEMS.register("dan",
+            () -> new DanItem(new Item.Properties().stacksTo(64)));
 }

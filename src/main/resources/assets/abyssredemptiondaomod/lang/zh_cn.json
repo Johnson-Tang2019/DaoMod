@@ -15,14 +15,18 @@
   "gui.daomod.stage1" : "%s二重",
   "gui.daomod.stage2" : "%s三重",
   "gui.daomod.stage3" : "%s四重",
-  "gui.daomod.stage5" : "%s五重",
-  "gui.daomod.stage6" : "%s六重",
-  "gui.daomod.stage7" : "%s七重",
-  "gui.daomod.stage8" : "半步%s",
-  "gui.daomod.stage9" : "巅峰",
+  "gui.daomod.stage4" : "%s五重",
+  "gui.daomod.stage5" : "%s六重",
+  "gui.daomod.stage6" : "%s七重",
+  "gui.daomod.stage7" : "半步%s",
+  "gui.daomod.stage8" : "巅峰",
 
   "item.abyssredemptiondaomod.soul_sword": "§d玄天灵剑",
 
-  "block.abyssredemptiondaomod.prayer_mat": "草编蒲团"
+  "item.abyssredemptiondaomod.dan": "§e丹",
+
+  "creativetab.abyssredemptiondaomod.dao_tab": "道",
+
+  "block.abyssredemptiondaomod.putuan": "草编蒲团"
 
 }

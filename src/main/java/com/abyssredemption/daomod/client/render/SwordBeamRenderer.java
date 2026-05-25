@@ -11,7 +11,6 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
@@ -29,16 +28,11 @@ public class SwordBeamRenderer extends EntityRenderer<SwordBeamEntity> {
     public void render(SwordBeamEntity entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
 
-        // 1. 让剑气始终面向玩家（类似粒子效果，但我们只让它绕Y轴旋转）
-        float yaw = Mth.lerp(partialTick, entity.yRotO, entity.getYRot());
-        float pitch = Mth.lerp(partialTick, entity.xRotO, entity.getXRot());
-        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - yaw));
-        poseStack.mulPose(Axis.XP.rotationDegrees(-pitch));
+        // 获取渲染管理器的朝向（即摄像机的朝向）
+        poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
+        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
 
-        // 2. 动态效果：随时间缩放和淡出（模拟灵气消散）
-        float lifeTime = entity.tickCount + partialTick;
         float scale = 1.0F;
-        float alpha = Mth.clamp(1.0F / 40.0F, 0.0F, 1.0F);
         poseStack.scale(scale * 1.5f, scale * 0.5f, scale); // 扁平化，看起来像月牙
 
         PoseStack.Pose lastPose = poseStack.last();
@@ -53,7 +47,7 @@ public class SwordBeamRenderer extends EntityRenderer<SwordBeamEntity> {
         // 4. 绘制四边形面片（一个扁平的月牙形）
         // 颜色设为青色 (85, 255, 255)，并加上动态透明度
         int r = 85, g = 255, b = 255;
-        int a = (int)(alpha * 255);
+        int a = 200;
 
         // 参数：X, Y, Z, R, G, B, A, U, V, Overlay, Light, NormalX, NormalY, NormalZ
         vertex(-1.0F, -1.0F, 0.0F, r, g, b, a, 0.0F, 1.0F, OverlayTexture.NO_OVERLAY, packedLight, 0.0F, 1.0F, 0.0F, vertexConsumer, matrix4f, matrix3f);
