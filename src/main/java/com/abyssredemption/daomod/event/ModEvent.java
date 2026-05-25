@@ -4,6 +4,7 @@ import com.abyssredemption.daomod.AbsDaoMod;
 import com.abyssredemption.daomod.attachment.CultivationData;
 import com.abyssredemption.daomod.network.CultivationPayload;
 import com.abyssredemption.daomod.registry.ModAttachments;
+import com.abyssredemption.daomod.registry.ModEffects;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -61,9 +62,14 @@ public class ModEvent {
                 // 检查玩家是否正骑在蒲团座位上
                 if (player.getVehicle() instanceof ArmorStand seat && seat.getTags().contains("daomod_seat")) {
 
+                    // 检查是否有丹毒反噬，有则无法修炼
+                    if (player.hasEffect(ModEffects.DAN_DU_FAN_SHI)) {
+                        player.displayClientMessage(Component.literal("§c经脉封闭，无法修炼！"), true);
+                        return;
+                    }
+
                     // 1. 增加境界进度 (这里替换为你自己的数据处理逻辑)
                     increaseRealmProgress(player, 1.0f);
-
                     // 2. 发送提示信息（可选）
                     player.displayClientMessage(Component.literal("§b灵气入体，境界有所感悟..."), true);
 
