@@ -21,6 +21,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.SOUL_SWORD.get());
                         output.accept(ModItems.DAN.get());
                         output.accept(ModItems.PUTUAN_ITEM.get());
+                        output.accept(ModItems.CULTIVATION_GUIDE_BOOK.get());
                     })
                     .build());
 }

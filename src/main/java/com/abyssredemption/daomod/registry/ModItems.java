@@ -1,6 +1,7 @@
 package com.abyssredemption.daomod.registry;
 
 import com.abyssredemption.daomod.AbsDaoMod;
+import com.abyssredemption.daomod.item.CultivationGuideBookItem;
 import com.abyssredemption.daomod.item.DanItem;
 import com.abyssredemption.daomod.item.SoulSwordItem;
 import net.minecraft.world.item.BlockItem;
@@ -27,4 +28,9 @@ public class ModItems {
     public static final DeferredItem<DanItem> DAN =
             ITEMS.register("dan",
             () -> new DanItem(new Item.Properties().stacksTo(64)));
+
+    // 4. 注册修炼指南书
+    public static final DeferredItem<CultivationGuideBookItem> CULTIVATION_GUIDE_BOOK =
+            ITEMS.register("cultivation_guide_book",
+            () -> new CultivationGuideBookItem(new Item.Properties()));
 }

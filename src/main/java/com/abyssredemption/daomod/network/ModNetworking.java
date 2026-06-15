@@ -2,6 +2,7 @@ package com.abyssredemption.daomod.network;
 
 import com.abyssredemption.daomod.AbsDaoMod;
 import com.abyssredemption.daomod.attachment.CultivationData;
+import com.abyssredemption.daomod.item.CultivationGuideBookItem;
 import com.abyssredemption.daomod.registry.ModAttachments;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -22,6 +23,12 @@ public class ModNetworking {
                 CultivationPayload.STREAM_CODEC,
                 ModNetworking::handleCultivationSync
         );
+
+        registrar.playToClient(
+                OpenGuideBookPayload.TYPE,
+                OpenGuideBookPayload.STREAM_CODEC,
+                ModNetworking::handleOpenGuideBook
+        );
     }
 
     // 客户端处理逻辑
@@ -40,6 +47,15 @@ public class ModNetworking {
                 // 更新客户端 Attachment
                 mc.player.setData(ModAttachments.CULTIVATION, newData);
             }
+        });
+    }
+
+    private static void handleOpenGuideBook(final OpenGuideBookPayload payload, final net.neoforged.neoforge.network.handling.IPayloadContext context) {
+        context.enqueueWork(() -> {
+            net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
+            mc.setScreen(new net.minecraft.client.gui.screens.inventory.BookViewScreen(
+                    new net.minecraft.client.gui.screens.inventory.BookViewScreen.BookAccess(CultivationGuideBookItem.createGuidePages())
+            ));
         });
     }
 }

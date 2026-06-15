@@ -13,10 +13,43 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 @EventBusSubscriber(modid = AbsDaoMod.MODID)
 public class ModEvent {
+
+    // 玩家死亡：下降一个小境界
+    @SubscribeEvent
+    public static void onPlayerDeath(LivingDeathEvent event) {
+        if (event.getEntity() instanceof net.minecraft.server.level.ServerPlayer player) {
+            var data = player.getData(ModAttachments.CULTIVATION);
+            int stage = data.getStage();
+            int realm = data.getRealm();
+
+            if (stage > 0) {
+                data.setStage(stage - 1);
+                player.displayClientMessage(Component.literal("§c道体受损，境界跌落！"), true);
+            } else if (realm > 0) {
+                data.setStage(8);
+                data.setRealm(realm - 1);
+                player.displayClientMessage(Component.literal("§4§l⚠ 大道崩殂！大境界跌落！"), true);
+            } else {
+                player.displayClientMessage(Component.literal("§7修为已至谷底，无法再降..."), true);
+            }
+
+            data.setQi(0);
+            player.setData(ModAttachments.CULTIVATION, data);
+
+            player.connection.send(new CultivationPayload(
+                    data.getRealm(),
+                    data.getQi(),
+                    data.getSectOrthodoxy(),
+                    data.getStage(),
+                    data.getRealmProgress()
+            ));
+        }
+    }
 
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event) {

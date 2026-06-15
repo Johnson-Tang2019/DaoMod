@@ -8,6 +8,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -76,14 +77,14 @@ public class SoulSwordItem extends SwordItem {
                 serverPlayer.connection.send(new CultivationPayload(data.getRealm(), data.getQi(), data.getSectOrthodoxy(),
                         data.getStage(), data.getRealmProgress()));
                 // 生成剑气实体
-                shootBeam(level, serverPlayer, seconds);
+                shootBeam(level, serverPlayer, player.getUsedItemHand(), seconds);
             } else {
                 player.displayClientMessage(Component.literal("炁已枯竭，剑气自溃"), true);
             }
         }
     }
 
-    private void shootBeam(Level level, ServerPlayer player, float power) {
+    private void shootBeam(Level level, ServerPlayer player, InteractionHand usedHand, float power) {
         Vec3 look = player.getLookAngle();
         SwordBeamEntity beam = new SwordBeamEntity(
                 ModEntities.SWORD_BEAM.get(), // 1. 传入注册好的类型
@@ -93,7 +94,22 @@ public class SoulSwordItem extends SwordItem {
                 power * 5.0f                  // 5. 最终伤害
         );
 
-        beam.setPos(player.getX(), player.getEyeY() - 0.1, player.getZ());
+        Vec3 muzzle = getSwordMuzzlePosition(player, usedHand, look);
+        beam.setPos(muzzle.x, muzzle.y, muzzle.z);
         level.addFreshEntity(beam);
+    }
+
+    private Vec3 getSwordMuzzlePosition(ServerPlayer player, InteractionHand usedHand, Vec3 look) {
+        HumanoidArm arm = usedHand == InteractionHand.MAIN_HAND
+                ? player.getMainArm()
+                : player.getMainArm().getOpposite();
+        double side = arm == HumanoidArm.RIGHT ? 1.0 : -1.0;
+
+        double yaw = Math.toRadians(player.getYRot());
+        Vec3 right = new Vec3(-Math.cos(yaw), 0.0, -Math.sin(yaw));
+
+        return new Vec3(player.getX(), player.getEyeY() - 0.42, player.getZ())
+                .add(look.normalize().scale(0.95))
+                .add(right.scale(0.38 * side));
     }
 }

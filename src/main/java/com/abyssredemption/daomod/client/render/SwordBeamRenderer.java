@@ -5,18 +5,18 @@ import com.abyssredemption.daomod.entity.SwordBeamEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 public class SwordBeamRenderer extends EntityRenderer<SwordBeamEntity> {
-    // 纹理文件路径：assets/abyssredemptiondaomod/textures/entity/sword_beam.png
-    // 建议使用半透明的蓝色或青色弧形贴图
     public static final ResourceLocation TEXTURE =
             ResourceLocation.fromNamespaceAndPath(AbsDaoMod.MODID, "textures/entity/sword_beam.png");
 
@@ -25,48 +25,55 @@ public class SwordBeamRenderer extends EntityRenderer<SwordBeamEntity> {
     }
 
     @Override
-    public void render(SwordBeamEntity entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+    public void render(SwordBeamEntity entity, float entityYaw, float partialTick, PoseStack poseStack,
+                       MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
-
-        // 获取渲染管理器的朝向（即摄像机的朝向）
         poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(90.0F));
+        poseStack.scale(0.65F, 0.65F, 0.65F);
 
-        float scale = 1.0F;
-        poseStack.scale(scale * 1.5f, scale * 0.5f, scale); // 扁平化，看起来像月牙
+        float age = entity.tickCount + partialTick;
+        float pulse = 0.88F + 0.12F * Mth.sin(age * 0.55F);
+        VertexConsumer consumer = buffer.getBuffer(RenderType.entityTranslucent(TEXTURE));
 
-        PoseStack.Pose lastPose = poseStack.last();
-        Matrix4f matrix4f = lastPose.pose();
-        Matrix3f matrix3f = lastPose.normal();
-
-        // 3. 使用特定的渲染类型：实体转半透明（entity_translucent），这样可以看见背景且受光照
-        VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityTranslucent(TEXTURE));
-        // 它自身发光
-        RenderType.beaconBeam(TEXTURE, true);
-
-        // 4. 绘制四边形面片（一个扁平的月牙形）
-        // 颜色设为青色 (85, 255, 255)，并加上动态透明度
-        int r = 85, g = 255, b = 255;
-        int a = 200;
-
-        // 参数：X, Y, Z, R, G, B, A, U, V, Overlay, Light, NormalX, NormalY, NormalZ
-        vertex(-1.0F, -1.0F, 0.0F, r, g, b, a, 0.0F, 1.0F, OverlayTexture.NO_OVERLAY, packedLight, 0.0F, 1.0F, 0.0F, vertexConsumer, matrix4f, matrix3f);
-        vertex( 1.0F, -1.0F, 0.0F, r, g, b, a, 1.0F, 1.0F, OverlayTexture.NO_OVERLAY, packedLight, 0.0F, 1.0F, 0.0F, vertexConsumer, matrix4f, matrix3f);
-        vertex( 1.0F,  1.0F, 0.0F, r, g, b, a, 1.0F, 0.0F, OverlayTexture.NO_OVERLAY, packedLight, 0.0F, 1.0F, 0.0F, vertexConsumer, matrix4f, matrix3f);
-        vertex(-1.0F,  1.0F, 0.0F, r, g, b, a, 0.0F, 0.0F, OverlayTexture.NO_OVERLAY, packedLight, 0.0F, 1.0F, 0.0F, vertexConsumer, matrix4f, matrix3f);
-
-        // 5. 绘制背面（防止转身看不见）
-        vertex(-1.0F,  1.0F, 0.0F, r, g, b, a, 0.0F, 0.0F, OverlayTexture.NO_OVERLAY, packedLight, 0.0F, -1.0F, 0.0F, vertexConsumer, matrix4f, matrix3f);
-        vertex( 1.0F,  1.0F, 0.0F, r, g, b, a, 1.0F, 0.0F, OverlayTexture.NO_OVERLAY, packedLight, 0.0F, -1.0F, 0.0F, vertexConsumer, matrix4f, matrix3f);
-        vertex( 1.0F, -1.0F, 0.0F, r, g, b, a, 1.0F, 1.0F, OverlayTexture.NO_OVERLAY, packedLight, 0.0F, -1.0F, 0.0F, vertexConsumer, matrix4f, matrix3f);
-        vertex(-1.0F, -1.0F, 0.0F, r, g, b, a, 0.0F, 1.0F, OverlayTexture.NO_OVERLAY, packedLight, 0.0F, -1.0F, 0.0F, vertexConsumer, matrix4f, matrix3f);
+        // Ink shadow, jade aura, and bright blade core are drawn separately so the beam
+        // reads like a brush stroke instead of a single flat crescent.
+        drawQuad(poseStack, consumer, 2.35F, 0.78F, 0.006F, 18, 42, 48, alpha(62 * pulse));
+        drawQuad(poseStack, consumer, 2.08F, 0.62F, 0.004F, 62, 206, 184, alpha(130 * pulse));
+        drawQuad(poseStack, consumer, 1.84F, 0.48F, 0.002F, 232, 255, 240, alpha(228 * pulse));
+        drawQuad(poseStack, consumer, 1.58F, 0.34F, 0.000F, 255, 246, 190, alpha(112 * pulse));
 
         poseStack.popPose();
-        super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight);
+        super.render(entity, entityYaw, partialTick, poseStack, buffer, LightTexture.FULL_BRIGHT);
     }
 
-    // 辅助方法，简化顶点绘制
-    private void vertex(float x, float y, float z, int r, int g, int b, int a, float u, float v, int overlay, int light, float normalX, float normalY, float normalZ, VertexConsumer consumer, Matrix4f pose, Matrix3f normal) {
+    private static int alpha(float value) {
+        return Mth.clamp(Math.round(value), 0, 255);
+    }
+
+    private static void drawQuad(PoseStack poseStack, VertexConsumer consumer, float halfWidth, float halfHeight,
+                                 float z, int r, int g, int b, int a) {
+        PoseStack.Pose pose = poseStack.last();
+        Matrix4f matrix4f = pose.pose();
+        Matrix3f matrix3f = pose.normal();
+        int overlay = OverlayTexture.NO_OVERLAY;
+        int light = LightTexture.FULL_BRIGHT;
+
+        vertex(-halfWidth, -halfHeight, z, r, g, b, a, 0.0F, 1.0F, overlay, light, 0.0F, 1.0F, 0.0F, consumer, matrix4f, matrix3f);
+        vertex(halfWidth, -halfHeight, z, r, g, b, a, 1.0F, 1.0F, overlay, light, 0.0F, 1.0F, 0.0F, consumer, matrix4f, matrix3f);
+        vertex(halfWidth, halfHeight, z, r, g, b, a, 1.0F, 0.0F, overlay, light, 0.0F, 1.0F, 0.0F, consumer, matrix4f, matrix3f);
+        vertex(-halfWidth, halfHeight, z, r, g, b, a, 0.0F, 0.0F, overlay, light, 0.0F, 1.0F, 0.0F, consumer, matrix4f, matrix3f);
+
+        vertex(-halfWidth, halfHeight, -z, r, g, b, a, 0.0F, 0.0F, overlay, light, 0.0F, -1.0F, 0.0F, consumer, matrix4f, matrix3f);
+        vertex(halfWidth, halfHeight, -z, r, g, b, a, 1.0F, 0.0F, overlay, light, 0.0F, -1.0F, 0.0F, consumer, matrix4f, matrix3f);
+        vertex(halfWidth, -halfHeight, -z, r, g, b, a, 1.0F, 1.0F, overlay, light, 0.0F, -1.0F, 0.0F, consumer, matrix4f, matrix3f);
+        vertex(-halfWidth, -halfHeight, -z, r, g, b, a, 0.0F, 1.0F, overlay, light, 0.0F, -1.0F, 0.0F, consumer, matrix4f, matrix3f);
+    }
+
+    private static void vertex(float x, float y, float z, int r, int g, int b, int a, float u, float v,
+                               int overlay, int light, float normalX, float normalY, float normalZ,
+                               VertexConsumer consumer, Matrix4f pose, Matrix3f normal) {
         consumer.addVertex(pose, x, y, z)
                 .setColor(r, g, b, a)
                 .setUv(u, v)
