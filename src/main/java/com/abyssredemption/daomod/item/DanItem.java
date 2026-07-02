@@ -103,7 +103,9 @@ public class DanItem extends Item {
                     data.getQi(),
                     data.getSectOrthodoxy(),
                     data.getStage(),
-                    data.getRealmProgress()
+                    data.getRealmProgress(),
+                    data.getKarma(),
+                    data.getSect()
             ));
 
             // 4. 发送突破提示

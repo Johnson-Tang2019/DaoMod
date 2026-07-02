@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "abyssredemptiondaomod:block/lingzhi_plant"
+  }
+}

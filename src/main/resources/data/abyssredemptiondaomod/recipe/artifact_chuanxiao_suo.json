@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "abyssredemptiondaomod:gengjin_shenkuang"
+    },
+    {
+      "item": "abyssredemptiondaomod:daoling_yu"
+    },
+    {
+      "item": "abyssredemptiondaomod:jianyi_cao"
+    },
+    {
+      "item": "abyssredemptiondaomod:lingshi_ore"
+    }
+  ],
+  "result": {
+    "id": "abyssredemptiondaomod:chuanxiao_suo"
+  }
+}

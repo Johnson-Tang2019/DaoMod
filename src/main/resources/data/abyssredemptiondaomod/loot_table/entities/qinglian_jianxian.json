@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        { "type": "minecraft:item", "name": "abyssredemptiondaomod:zaohua_qinglian" }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        { "type": "minecraft:item", "name": "abyssredemptiondaomod:fuyao_fan", "conditions": [{ "condition": "minecraft:random_chance", "chance": 0.25 }] }
+      ]
+    }
+  ]
+}

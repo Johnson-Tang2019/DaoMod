@@ -1,9 +1,7 @@
 package com.abyssredemption.daomod.network;
 
 import com.abyssredemption.daomod.AbsDaoMod;
-import com.abyssredemption.daomod.attachment.CultivationData;
-import com.abyssredemption.daomod.item.CultivationGuideBookItem;
-import com.abyssredemption.daomod.registry.ModAttachments;
+import com.abyssredemption.daomod.client.ClientPayloadHandlers;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -33,29 +31,10 @@ public class ModNetworking {
 
     // 客户端处理逻辑
     private static void handleCultivationSync(final CultivationPayload payload, final net.neoforged.neoforge.network.handling.IPayloadContext context) {
-        context.enqueueWork(() -> {
-            net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
-            if (mc.player != null) {
-                // 将收到的数据转换回你的 CultivationData 类
-                CultivationData newData = new CultivationData(
-                        payload.realm(),
-                        payload.qi(), // 如果你类里是double，记得强转
-                        payload.sectOrthodoxy(),
-                        payload.stage(),
-                        payload.realmProgress()
-                );
-                // 更新客户端 Attachment
-                mc.player.setData(ModAttachments.CULTIVATION, newData);
-            }
-        });
+        ClientPayloadHandlers.handleCultivationSync(payload, context);
     }
 
     private static void handleOpenGuideBook(final OpenGuideBookPayload payload, final net.neoforged.neoforge.network.handling.IPayloadContext context) {
-        context.enqueueWork(() -> {
-            net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
-            mc.setScreen(new net.minecraft.client.gui.screens.inventory.BookViewScreen(
-                    new net.minecraft.client.gui.screens.inventory.BookViewScreen.BookAccess(CultivationGuideBookItem.createGuidePages())
-            ));
-        });
+        ClientPayloadHandlers.handleOpenGuideBook(payload, context);
     }
 }

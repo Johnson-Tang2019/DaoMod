@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        { "type": "minecraft:item", "name": "abyssredemptiondaomod:qianji_yin", "conditions": [{ "condition": "minecraft:random_chance", "chance": 0.3 }] },
+        { "type": "minecraft:item", "name": "abyssredemptiondaomod:hantan_yintie", "conditions": [{ "condition": "minecraft:random_chance", "chance": 0.12 }] }
+      ]
+    }
+  ]
+}

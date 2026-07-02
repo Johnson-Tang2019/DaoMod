@@ -20,4 +20,21 @@ public class ModBlocks {
                     .strength(0.5f)
                     .sound(SoundType.WOOL)
                     .noOcclusion()));
+
+    public static final DeferredBlock<Block> LINGZHI_PLANT = BLOCKS.register("lingzhi_plant",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.PLANT)
+                    .strength(0.1f)
+                    .sound(SoundType.GRASS)
+                    .lightLevel(state -> 3)
+                    .noCollission()
+                    .noOcclusion()));
+
+    public static final DeferredBlock<Block> LINGSHI_ORE = BLOCKS.register("lingshi_ore",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_CYAN)
+                    .strength(4.0f, 5.0f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.STONE)
+                    .lightLevel(state -> 2)));
 }

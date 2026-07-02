@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "abyssredemptiondaomod:hantan_yintie"
+    },
+    {
+      "item": "abyssredemptiondaomod:daoling_yu"
+    },
+    {
+      "item": "abyssredemptiondaomod:shexian_guo"
+    },
+    {
+      "item": "abyssredemptiondaomod:lingshi_ore"
+    }
+  ],
+  "result": {
+    "id": "abyssredemptiondaomod:fuyu_fanyun_gai"
+  }
+}

@@ -1,0 +1,1 @@
+{"type":"minecraft:entity","pools":[{"rolls":1,"entries":[{"type":"minecraft:item","name":"abyssredemptiondaomod:lietian_bengshan"}]},{"rolls":1,"entries":[{"type":"minecraft:item","name":"abyssredemptiondaomod:zhanshen_xuanjin","conditions":[{"condition":"minecraft:random_chance","chance":0.55}]}]}]}

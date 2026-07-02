@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "abyssredemptiondaomod:lihuo_chijin"
+    },
+    {
+      "item": "abyssredemptiondaomod:lihuo_sha"
+    },
+    {
+      "item": "abyssredemptiondaomod:bihuo_shenzao"
+    },
+    {
+      "item": "abyssredemptiondaomod:lingshi_ore"
+    }
+  ],
+  "result": {
+    "id": "abyssredemptiondaomod:lihuo_fentian_ling"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "abyssredemptiondaomod:item/guixu_dinghai_zhu"
+  }
+}

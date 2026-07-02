@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#minecraft:is_overworld",
+  "features": "abyssredemptiondaomod:lingzhi_plant",
+  "step": "vegetal_decoration"
+}

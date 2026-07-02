@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        { "type": "minecraft:item", "name": "abyssredemptiondaomod:juling_cao", "conditions": [{ "condition": "minecraft:random_chance", "chance": 0.35 }] },
+        { "type": "minecraft:item", "name": "abyssredemptiondaomod:daoling_yu", "conditions": [{ "condition": "minecraft:random_chance", "chance": 0.12 }] }
+      ]
+    }
+  ]
+}

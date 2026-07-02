@@ -17,7 +17,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
-
 @EventBusSubscriber(modid = AbsDaoMod.MODID)
 public class DaoCommand {
 
@@ -27,6 +26,11 @@ public class DaoCommand {
     }
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+        dispatcher.register(Commands.literal("dao")
+                .then(Commands.literal("join")
+                        .then(Commands.argument("sect", IntegerArgumentType.integer(1, 4))
+                                .executes(context -> joinSect(
+                                        context.getSource(), IntegerArgumentType.getInteger(context, "sect"))))));
         // 注册qi命令
         dispatcher.register(Commands.literal("dao").requires(source -> source.hasPermission(2)) // 需要管理员权限
                 .then(Commands.literal("qi").then(Commands.literal("set")
@@ -53,6 +57,15 @@ public class DaoCommand {
                         )
                 )
         );
+        dispatcher.register(Commands.literal("dao").requires(source -> source.hasPermission(2))
+                .then(Commands.literal("sect")
+                        .then(Commands.literal("set")
+                                .then(Commands.argument("targets", EntityArgument.players())
+                                        .then(Commands.argument("sect", IntegerArgumentType.integer(0, 4))
+                                                .executes(context -> updateSect(
+                                                        context.getSource(),
+                                                        EntityArgument.getPlayers(context, "targets"),
+                                                        IntegerArgumentType.getInteger(context, "sect"))))))));
 
         //
         dispatcher.register(Commands.literal("dao").requires(source -> source.hasPermission(2)) // 需要管理员权限
@@ -134,7 +147,9 @@ public class DaoCommand {
                     data.getQi(),
                     data.getSectOrthodoxy(),
                     data.getStage(),
-                    data.getRealmProgress()
+                    data.getRealmProgress(),
+                    data.getKarma(),
+                    data.getSect()
             ));
 
             long finalNewQi = newQi;
@@ -168,7 +183,9 @@ public class DaoCommand {
                     data.getQi(),
                     data.getSectOrthodoxy(),
                     data.getStage(),
-                    data.getRealmProgress()
+                    data.getRealmProgress(),
+                    data.getKarma(),
+                    data.getSect()
             ));
 
             int finalNewRealm = newRealm;
@@ -203,13 +220,51 @@ public class DaoCommand {
                     data.getQi(),
                     data.getSectOrthodoxy(),
                     data.getStage(),
-                    data.getRealmProgress()
+                    data.getRealmProgress(),
+                    data.getKarma(),
+                    data.getSect()
             ));
 
             int finalNewRealm = newRealmProgress;
             source.sendSuccess(() -> Component.literal("已为 " + player.getScoreboardName() + " 设置境界为: " + finalNewRealm), true);
         }
         return targets.size();
+    }
+
+    private static int updateSect(CommandSourceStack source, java.util.Collection<ServerPlayer> targets, int sect) {
+        String[] names = {"散修", "太上天枢剑宗", "造化仙宗", "大雷音寺", "罗刹魔教"};
+        for (ServerPlayer player : targets) {
+            var data = player.getData(ModAttachments.CULTIVATION);
+            data.setSect(sect);
+            player.setData(ModAttachments.CULTIVATION, data);
+            syncCultivation(player, data);
+            source.sendSuccess(() -> Component.literal("已将 " + player.getScoreboardName() + " 的道统设为 " + names[sect]), true);
+        }
+        return targets.size();
+    }
+
+    private static int joinSect(CommandSourceStack source, int sect) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+        ServerPlayer player = source.getPlayerOrException();
+        var data = player.getData(ModAttachments.CULTIVATION);
+        if (data.getSect() != 0) {
+            source.sendFailure(Component.translatable("command.daomod.sect.already_joined"));
+            return 0;
+        }
+        data.setSect(sect);
+        player.setData(ModAttachments.CULTIVATION, data);
+        syncCultivation(player, data);
+        source.sendSuccess(() -> Component.translatable("command.daomod.sect.joined", sectName(sect)), false);
+        return 1;
+    }
+
+    private static Component sectName(int sect) {
+        return Component.translatable("gui.daomod.sect" + Math.max(0, Math.min(4, sect)));
+    }
+
+    private static void syncCultivation(ServerPlayer player, CultivationData data) {
+        player.connection.send(new CultivationPayload(
+                data.getRealm(), data.getQi(), data.getSectOrthodoxy(), data.getStage(),
+                data.getRealmProgress(), data.getKarma(), data.getSect()));
     }
 
 

@@ -34,12 +34,20 @@ public class CultivationGui {
         graphics.pose().translate(0, 0, 2000);
 
         Component qiLabel = Component.translatable("gui.daomod.qi", data.getQi());
+        Component karmaLabel = Component.translatable("gui.daomod.karma", data.getKarma());
+        Component sectLabel = Component.translatable("gui.daomod.sect", getSectName(data.getSect()));
 
         Component realmText = getStageName(data.getStage(), data.getRealm());
 
         graphics.drawString(mc.font, realmText, guiLeft, guiTop, color, false);
         graphics.drawString(mc.font, qiLabel, guiLeft, guiTop + 10, color, false);
         graphics.drawString(mc.font, data.getRealmProgress() + "", guiLeft, guiTop + 20, color, false);
+        graphics.drawString(mc.font, karmaLabel, guiLeft, guiTop + 30, 0xaa55ff, false);
+        graphics.drawString(mc.font, sectLabel, guiLeft, guiTop + 40, 0xe4b95f, false);
+    }
+
+    private static Component getSectName(int sect) {
+        return Component.translatable("gui.daomod.sect" + Math.max(0, Math.min(4, sect)));
     }
 
     private static Component getRealmName(int realm) {
