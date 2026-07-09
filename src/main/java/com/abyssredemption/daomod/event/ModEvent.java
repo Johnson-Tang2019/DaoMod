@@ -34,10 +34,12 @@ import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 @EventBusSubscriber(modid = AbsDaoMod.MODID)
@@ -66,6 +68,27 @@ public class ModEvent {
             ResourceLocation.fromNamespaceAndPath(AbsDaoMod.MODID, "sect_luck");
 
     @SubscribeEvent
+    public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
+        syncPlayer(event.getEntity());
+    }
+
+    @SubscribeEvent
+    public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
+        syncPlayer(event.getEntity());
+    }
+
+    @SubscribeEvent
+    public static void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
+        syncPlayer(event.getEntity());
+    }
+
+    private static void syncPlayer(Player player) {
+        if (player instanceof ServerPlayer serverPlayer) {
+            syncCultivation(serverPlayer, player.getData(ModAttachments.CULTIVATION));
+        }
+    }
+
+    @SubscribeEvent
     public static void onPlayerDeath(LivingDeathEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
             var data = player.getData(ModAttachments.CULTIVATION);
@@ -74,13 +97,16 @@ public class ModEvent {
 
             if (stage > 0) {
                 data.setStage(stage - 1);
-                player.displayClientMessage(Component.literal("§c道体受损，境界跌落！"), true);
+                player.displayClientMessage(Component.translatable(
+                        "message.abyssredemptiondaomod.death_stage_loss"), true);
             } else if (realm > 0) {
                 data.setStage(8);
                 data.setRealm(realm - 1);
-                player.displayClientMessage(Component.literal("§4§l大道崩殂！大境界跌落！"), true);
+                player.displayClientMessage(Component.translatable(
+                        "message.abyssredemptiondaomod.death_realm_loss"), true);
             } else {
-                player.displayClientMessage(Component.literal("§7修为已至谷底，无法再降..."), true);
+                player.displayClientMessage(Component.translatable(
+                        "message.abyssredemptiondaomod.death_minimum"), true);
             }
 
             data.setQi(0);
@@ -95,7 +121,7 @@ public class ModEvent {
             return;
         }
         if (event.getEntity() instanceof Player) {
-            addKarma(killer, 6, true, "斩杀同类，因果骤增");
+            addKarma(killer, 6, true, "message.abyssredemptiondaomod.karma_player");
             return;
         }
         if (!(event.getEntity() instanceof LivingEntity victim)) {
@@ -148,14 +174,16 @@ public class ModEvent {
         if (stack.getItem() instanceof SoulSwordItem sword && sword.isAboveRealm(attacker)) {
             event.setNewDamage(event.getNewDamage() * 0.4f);
             if (attacker instanceof ServerPlayer serverPlayer && serverPlayer.tickCount % 40 == 0) {
-                serverPlayer.displayClientMessage(Component.literal("境界不足，难以驾驭"
-                        + SoulSwordItem.getRealmName(sword.getSwordRealm()) + "品阶之剑。"), true);
+                serverPlayer.displayClientMessage(Component.translatable(
+                        "message.abyssredemptiondaomod.weapon_realm_low",
+                        Component.translatable("gui.daomod.realm" + sword.getSwordRealm())), true);
             }
         } else if (stack.getItem() instanceof DaoBladeItem blade && blade.isAboveRealm(attacker)) {
             event.setNewDamage(event.getNewDamage() * 0.4f);
             if (attacker instanceof ServerPlayer serverPlayer && serverPlayer.tickCount % 40 == 0) {
-                serverPlayer.displayClientMessage(Component.literal("境界不足，难以驾驭"
-                        + SoulSwordItem.getRealmName(blade.getBladeRealm()) + "品阶之刀。"), true);
+                serverPlayer.displayClientMessage(Component.translatable(
+                        "message.abyssredemptiondaomod.weapon_realm_low",
+                        Component.translatable("gui.daomod.realm" + blade.getBladeRealm())), true);
             }
         }
     }
@@ -171,7 +199,24 @@ public class ModEvent {
         recoverQi(player);
         handleMeditation(player);
         if (player instanceof ServerPlayer serverPlayer) {
+            returnFromImmortalVoid(serverPlayer);
             SwordFlightHelper.tickSwordFlight(serverPlayer);
+        }
+    }
+
+    private static void returnFromImmortalVoid(ServerPlayer player) {
+        if (player.getY() >= player.level().getMinBuildHeight() - 16
+                || !player.level().dimension().location().getPath().equals("eternal_immortal_realm")) {
+            return;
+        }
+        ServerLevel overworld = player.getServer().overworld();
+        int x = player.blockPosition().getX();
+        int z = player.blockPosition().getZ();
+        int y = overworld.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z) + 16;
+        if (player.teleportTo(overworld, x + 0.5, y, z + 0.5, java.util.Set.of(), player.getYRot(), 0.0f)) {
+            player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 20 * 12, 0));
+            player.displayClientMessage(Component.translatable(
+                    "message.abyssredemptiondaomod.immortal_void_return"), true);
         }
     }
 
@@ -277,15 +322,16 @@ public class ModEvent {
         }
 
         if (player.hasEffect(ModEffects.DAN_DU_FAN_SHI)) {
-            player.displayClientMessage(Component.literal("§c经脉封闭，无法修炼！"), true);
+            player.displayClientMessage(Component.translatable(
+                    "message.abyssredemptiondaomod.meditation_blocked"), true);
             return;
         }
 
         int auraConcentration = SpiritualAuraHelper.getConcentration(player);
         int progressGain = SpiritualAuraHelper.getMeditationProgressGain(player);
         increaseRealmProgress(player, progressGain);
-        player.displayClientMessage(Component.literal("§b灵气入体，灵气浓度 "
-                + auraConcentration + "，修炼进度 +" + progressGain), true);
+        player.displayClientMessage(Component.translatable(
+                "message.abyssredemptiondaomod.meditation_progress", auraConcentration, progressGain), true);
 
         if (level instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(ParticleTypes.ENCHANTED_HIT,
@@ -385,12 +431,12 @@ public class ModEvent {
 
     private static KarmaResult getKarmaForKill(LivingEntity victim) {
         if (isFriendly(victim)) {
-            return new KarmaResult(5, true, "杀戮友好生灵，因果深重");
+            return new KarmaResult(5, true, "message.abyssredemptiondaomod.karma_friendly");
         }
         if (victim instanceof NeutralMob) {
-            return new KarmaResult(3, true, "杀戮中立生灵，因果加身");
+            return new KarmaResult(3, true, "message.abyssredemptiondaomod.karma_neutral");
         }
-        return new KarmaResult(1, false, "杀戮生灵，因果微增");
+        return new KarmaResult(1, false, "message.abyssredemptiondaomod.karma_hostile");
     }
 
     private static boolean isFriendly(LivingEntity entity) {
@@ -407,7 +453,7 @@ public class ModEvent {
                 || category == MobCategory.AXOLOTLS;
     }
 
-    private static void addKarma(ServerPlayer player, int amount, boolean causesNausea, String message) {
+    private static void addKarma(ServerPlayer player, int amount, boolean causesNausea, String messageKey) {
         var data = player.getData(ModAttachments.CULTIVATION);
         data.addKarma(amount);
         player.setData(ModAttachments.CULTIVATION, data);
@@ -416,8 +462,8 @@ public class ModEvent {
         if (causesNausea) {
             player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0, false, true, true));
         }
-        player.displayClientMessage(Component.literal("§5" + message + "，因果 +" + amount
-                + "，当前因果 " + data.getKarma()), true);
+        player.displayClientMessage(Component.translatable("message.abyssredemptiondaomod.karma_added",
+                Component.translatable(messageKey), amount, data.getKarma()), true);
     }
 
     private record KarmaResult(int amount, boolean causesNausea, String message) {

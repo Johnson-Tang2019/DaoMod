@@ -1,1 +1,59 @@
-{"type":"minecraft:entity","pools":[{"rolls":1,"entries":[{"type":"minecraft:item","name":"abyssredemptiondaomod:butian_wuse_shi"}]},{"rolls":1,"entries":[{"type":"minecraft:item","name":"abyssredemptiondaomod:wuse_shenshi","conditions":[{"condition":"minecraft:random_chance","chance":0.5}]}]}]}
+{
+    "type":  "minecraft:entity",
+    "pools":  [
+                  {
+                      "rolls":  1,
+                      "entries":  [
+                                      {
+                                          "type":  "minecraft:item",
+                                          "name":  "abyssredemptiondaomod:butian_wuse_shi"
+                                      }
+                                  ]
+                  },
+                  {
+                      "rolls":  1,
+                      "entries":  [
+                                      {
+                                          "type":  "minecraft:item",
+                                          "name":  "abyssredemptiondaomod:wuse_shenshi",
+                                          "conditions":  [
+                                                             {
+                                                                 "condition":  "minecraft:random_chance",
+                                                                 "chance":  0.5
+                                                             }
+                                                         ]
+                                      }
+                                  ]
+                  },
+                  {
+                      "rolls":  1,
+                      "entries":  [
+                                      {
+                                          "type":  "minecraft:item",
+                                          "name":  "abyssredemptiondaomod:nongchao_yiyin",
+                                          "conditions":  [
+                                                             {
+                                                                 "condition":  "minecraft:random_chance",
+                                                                 "chance":  0.35
+                                                             }
+                                                         ]
+                                      }
+                                  ]
+                  },
+                  {
+                      "rolls":  1,
+                      "entries":  [
+                                      {
+                                          "type":  "minecraft:item",
+                                          "name":  "abyssredemptiondaomod:ningqi_hua",
+                                          "conditions":  [
+                                                             {
+                                                                 "condition":  "minecraft:random_chance",
+                                                                 "chance":  0.35
+                                                             }
+                                                         ]
+                                      }
+                                  ]
+                  }
+              ]
+}

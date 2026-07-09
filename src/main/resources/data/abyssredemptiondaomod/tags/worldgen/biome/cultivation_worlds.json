@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:is_overworld",
+    "abyssredemptiondaomod:zhongtian_shentu",
+    "abyssredemptiondaomod:donghai_leize",
+    "abyssredemptiondaomod:xiji_jinge",
+    "abyssredemptiondaomod:nanjiang_huoyu",
+    "abyssredemptiondaomod:beiji_minghai",
+    "abyssredemptiondaomod:guixu_shenhai",
+    "abyssredemptiondaomod:xukong_tianwai"
+  ]
+}

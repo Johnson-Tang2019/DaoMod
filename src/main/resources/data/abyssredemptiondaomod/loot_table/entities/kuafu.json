@@ -1,1 +1,44 @@
-{"type":"minecraft:entity","pools":[{"rolls":1,"entries":[{"type":"minecraft:item","name":"abyssredemptiondaomod:bihuo_shenzao"}]},{"rolls":1,"entries":[{"type":"minecraft:item","name":"abyssredemptiondaomod:xingchen_yuntie","conditions":[{"condition":"minecraft:random_chance","chance":0.55}]}]}]}
+{
+    "type":  "minecraft:entity",
+    "pools":  [
+                  {
+                      "rolls":  1,
+                      "entries":  [
+                                      {
+                                          "type":  "minecraft:item",
+                                          "name":  "abyssredemptiondaomod:bihuo_shenzao"
+                                      }
+                                  ]
+                  },
+                  {
+                      "rolls":  1,
+                      "entries":  [
+                                      {
+                                          "type":  "minecraft:item",
+                                          "name":  "abyssredemptiondaomod:xingchen_yuntie",
+                                          "conditions":  [
+                                                             {
+                                                                 "condition":  "minecraft:random_chance",
+                                                                 "chance":  0.55
+                                                             }
+                                                         ]
+                                      }
+                                  ]
+                  },
+                  {
+                      "rolls":  1,
+                      "entries":  [
+                                      {
+                                          "type":  "minecraft:item",
+                                          "name":  "abyssredemptiondaomod:fantian_fudi_yin",
+                                          "conditions":  [
+                                                             {
+                                                                 "condition":  "minecraft:random_chance",
+                                                                 "chance":  0.35
+                                                             }
+                                                         ]
+                                      }
+                                  ]
+                  }
+              ]
+}

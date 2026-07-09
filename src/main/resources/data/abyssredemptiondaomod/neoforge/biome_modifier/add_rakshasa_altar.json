@@ -1,6 +1,6 @@
 {
   "type": "neoforge:add_features",
-  "biomes": ["#c:is_badlands", "#c:is_cave"],
+  "biomes": "#abyssredemptiondaomod:badlands_or_cave",
   "features": "abyssredemptiondaomod:rakshasa_altar",
   "step": "surface_structures"
 }

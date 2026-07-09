@@ -57,7 +57,8 @@ public final class SwordFlightHelper {
         if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
             var data = serverPlayer.getData(ModAttachments.CULTIVATION);
             if (data.getQi() < TAKEOFF_QI_COST) {
-                serverPlayer.displayClientMessage(Component.literal("炁不足，无法御剑起势。"), true);
+                serverPlayer.displayClientMessage(Component.translatable(
+                        "message.abyssredemptiondaomod.sword_flight_qi_low"), true);
                 return false;
             }
 
@@ -66,7 +67,8 @@ public final class SwordFlightHelper {
             syncCultivation(serverPlayer, data);
             serverPlayer.startFallFlying();
             serverPlayer.getCooldowns().addCooldown(stack.getItem(), 20);
-            serverPlayer.displayClientMessage(Component.literal("御剑乘风。"), true);
+            serverPlayer.displayClientMessage(Component.translatable(
+                    "message.abyssredemptiondaomod.sword_flight_started"), true);
         }
 
         return true;
@@ -79,14 +81,14 @@ public final class SwordFlightHelper {
 
         HandStack handStack = findFlightSword(player);
         if (handStack == null || !canUseSwordFlight(player, handStack.stack())) {
-            stopSwordFlight(player, "御剑中断。");
+            stopSwordFlight(player, "message.abyssredemptiondaomod.sword_flight_interrupted");
             return;
         }
 
         var data = player.getData(ModAttachments.CULTIVATION);
         if (player.tickCount % QI_INTERVAL == 0) {
             if (data.getQi() < FLIGHT_QI_COST) {
-                stopSwordFlight(player, "炁已枯竭，御剑难继。");
+                stopSwordFlight(player, "message.abyssredemptiondaomod.sword_flight_qi_empty");
                 return;
             }
             data.setQi(data.getQi() - FLIGHT_QI_COST);
@@ -97,7 +99,7 @@ public final class SwordFlightHelper {
         if (player.tickCount % DURABILITY_INTERVAL == 0) {
             handStack.stack().hurtAndBreak(1, player, LivingEntity.getSlotForHand(handStack.hand()));
             if (!canSpendDurability(handStack.stack())) {
-                stopSwordFlight(player, "剑身受损，难以继续御空。");
+                stopSwordFlight(player, "message.abyssredemptiondaomod.sword_flight_sword_broken");
                 return;
             }
         }
@@ -172,9 +174,9 @@ public final class SwordFlightHelper {
         return null;
     }
 
-    private static void stopSwordFlight(ServerPlayer player, String message) {
+    private static void stopSwordFlight(ServerPlayer player, String messageKey) {
         player.stopFallFlying();
-        player.displayClientMessage(Component.literal(message), true);
+        player.displayClientMessage(Component.translatable(messageKey), true);
     }
 
     private static void syncCultivation(ServerPlayer player, CultivationData data) {

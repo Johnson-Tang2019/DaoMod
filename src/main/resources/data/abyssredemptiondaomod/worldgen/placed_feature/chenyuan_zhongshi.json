@@ -1,0 +1,27 @@
+﻿{
+    "feature":  "abyssredemptiondaomod:chenyuan_zhongshi",
+    "placement":  [
+                      {
+                          "count":  3,
+                          "type":  "minecraft:count"
+                      },
+                      {
+                          "type":  "minecraft:in_square"
+                      },
+                      {
+                          "height":  {
+                                         "min_inclusive":  {
+                                                               "absolute":  -32
+                                                           },
+                                         "type":  "minecraft:trapezoid",
+                                         "max_inclusive":  {
+                                                               "absolute":  96
+                                                           }
+                                     },
+                          "type":  "minecraft:height_range"
+                      },
+                      {
+                          "type":  "minecraft:biome"
+                      }
+                  ]
+}

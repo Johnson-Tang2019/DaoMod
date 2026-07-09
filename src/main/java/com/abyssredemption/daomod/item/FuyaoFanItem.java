@@ -49,9 +49,9 @@ public class FuyaoFanItem extends Item {
             affected++;
         }
 
-        player.displayClientMessage(Component.literal(affected > 0
-                        ? "扶摇扇卷起小旋风，扰乱了 " + affected + " 个目标。"
-                        : "扶摇扇轻响，前方没有可扰动的目标。")
+        player.displayClientMessage(Component.translatable(affected > 0
+                        ? "message.abyssredemptiondaomod.fuyao_hit"
+                        : "message.abyssredemptiondaomod.fuyao_miss", affected)
                 .withStyle(ChatFormatting.AQUA), true);
         player.getCooldowns().addCooldown(this, COOLDOWN_TICKS);
         player.awardStat(Stats.ITEM_USED.get(this));

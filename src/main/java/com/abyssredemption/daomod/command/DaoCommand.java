@@ -153,7 +153,8 @@ public class DaoCommand {
             ));
 
             long finalNewQi = newQi;
-            source.sendSuccess(() -> Component.literal("已为 " + player.getScoreboardName() + " 设置炁为: " + finalNewQi), true);
+            source.sendSuccess(() -> Component.translatable("command.daomod.qi.updated",
+                    player.getDisplayName(), finalNewQi), true);
         }
         return targets.size();
     }
@@ -189,7 +190,8 @@ public class DaoCommand {
             ));
 
             int finalNewRealm = newRealm;
-            source.sendSuccess(() -> Component.literal("已为 " + player.getScoreboardName() + " 设置境界为: " + finalNewRealm), true);
+            source.sendSuccess(() -> Component.translatable("command.daomod.realm.updated",
+                    player.getDisplayName(), finalNewRealm), true);
         }
         return targets.size();
     }
@@ -225,20 +227,21 @@ public class DaoCommand {
                     data.getSect()
             ));
 
-            int finalNewRealm = newRealmProgress;
-            source.sendSuccess(() -> Component.literal("已为 " + player.getScoreboardName() + " 设置境界为: " + finalNewRealm), true);
+            int finalProgress = newRealmProgress;
+            source.sendSuccess(() -> Component.translatable("command.daomod.progress.updated",
+                    player.getDisplayName(), finalProgress), true);
         }
         return targets.size();
     }
 
     private static int updateSect(CommandSourceStack source, java.util.Collection<ServerPlayer> targets, int sect) {
-        String[] names = {"散修", "太上天枢剑宗", "造化仙宗", "大雷音寺", "罗刹魔教"};
         for (ServerPlayer player : targets) {
             var data = player.getData(ModAttachments.CULTIVATION);
             data.setSect(sect);
             player.setData(ModAttachments.CULTIVATION, data);
             syncCultivation(player, data);
-            source.sendSuccess(() -> Component.literal("已将 " + player.getScoreboardName() + " 的道统设为 " + names[sect]), true);
+            source.sendSuccess(() -> Component.translatable("command.daomod.sect.updated",
+                    player.getDisplayName(), sectName(sect)), true);
         }
         return targets.size();
     }
@@ -253,6 +256,9 @@ public class DaoCommand {
         data.setSect(sect);
         player.setData(ModAttachments.CULTIVATION, data);
         syncCultivation(player, data);
+        var advancement = player.getServer().getAdvancements().get(
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(AbsDaoMod.MODID, "join_sect"));
+        if (advancement != null) player.getAdvancements().award(advancement, "joined");
         source.sendSuccess(() -> Component.translatable("command.daomod.sect.joined", sectName(sect)), false);
         return 1;
     }

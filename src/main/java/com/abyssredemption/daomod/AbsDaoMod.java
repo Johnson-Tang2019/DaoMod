@@ -26,7 +26,6 @@ public class AbsDaoMod {
         ModCreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
         ModEffects.MOB_EFFECTS.register(modEventBus);
         ModFeatures.FEATURES.register(modEventBus);
-
     }
 
 

@@ -1,0 +1,27 @@
+﻿{
+    "step":  "underground_ores",
+    "features":  [
+                     "abyssredemptiondaomod:chenyin_jingtie",
+                     "abyssredemptiondaomod:hantie_kuang",
+                     "abyssredemptiondaomod:chitong_shi",
+                     "abyssredemptiondaomod:lingci_sha",
+                     "abyssredemptiondaomod:gengjin_shenkuang",
+                     "abyssredemptiondaomod:lihuo_chijin",
+                     "abyssredemptiondaomod:hantan_yintie",
+                     "abyssredemptiondaomod:lihuo_sha",
+                     "abyssredemptiondaomod:chenyuan_zhongshi",
+                     "abyssredemptiondaomod:daoling_yu",
+                     "abyssredemptiondaomod:kongming_shi",
+                     "abyssredemptiondaomod:wuse_shenshi",
+                     "abyssredemptiondaomod:xingchen_yuntie",
+                     "abyssredemptiondaomod:xukong_jing",
+                     "abyssredemptiondaomod:zhanshen_xuanjin",
+                     "abyssredemptiondaomod:longxue_shi",
+                     "abyssredemptiondaomod:leijie_jin",
+                     "abyssredemptiondaomod:butian_wuse_shi",
+                     "abyssredemptiondaomod:suiyue_sha",
+                     "abyssredemptiondaomod:hunyuan_zushi"
+                 ],
+    "type":  "neoforge:add_features",
+    "biomes":  "#abyssredemptiondaomod:cultivation_worlds"
+}

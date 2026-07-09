@@ -1,0 +1,1 @@
+﻿{"type":"minecraft:block","pools":[{"rolls":1,"entries":[{"type":"minecraft:item","name":"abyssredemptiondaomod:hunyuan_zushi"}],"conditions":[{"condition":"minecraft:survives_explosion"}]}]}

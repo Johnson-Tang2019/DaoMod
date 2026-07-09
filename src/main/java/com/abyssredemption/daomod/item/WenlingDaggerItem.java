@@ -42,29 +42,24 @@ public class WenlingDaggerItem extends Item {
         }
 
         if (player.getData(ModAttachments.CULTIVATION).getRealm() < SWORD_REALM) {
-            player.displayClientMessage(Component.literal("问灵短剑品阶为" + SoulSwordItem.getRealmName(SWORD_REALM)
-                    + "，当前境界不足，无法催动感应。").withStyle(ChatFormatting.GRAY), true);
+            player.displayClientMessage(Component.translatable("message.abyssredemptiondaomod.wenling_realm_low",
+                    Component.translatable("gui.daomod.realm" + SWORD_REALM)).withStyle(ChatFormatting.GRAY), true);
             return InteractionResultHolder.fail(stack);
         }
 
         Optional<BlockPos> target = findNearestAuraSource(level, player);
         if (target.isEmpty()) {
-            player.displayClientMessage(Component.literal("问灵短剑微微一静，十米内未见可聚灵之物。")
+            player.displayClientMessage(Component.translatable("message.abyssredemptiondaomod.wenling_empty")
                     .withStyle(ChatFormatting.GRAY), true);
         } else {
             BlockPos pos = target.get();
             BlockState state = level.getBlockState(pos);
             double distance = Math.sqrt(pos.distSqr(player.blockPosition()));
             int strength = SpiritualAuraHelper.getAuraSourceStrength(state);
-            String direction = describeDirection(player, pos);
+            Component direction = describeDirection(player, pos);
 
-            player.displayClientMessage(Component.literal("剑身轻震，")
-                    .withStyle(ChatFormatting.AQUA)
-                    .append(Component.literal(direction).withStyle(ChatFormatting.GOLD))
-                    .append(Component.literal("约 " + String.format("%.1f", distance) + " 米处有聚灵之物：")
-                            .withStyle(ChatFormatting.GRAY))
-                    .append(state.getBlock().getName().copy().withStyle(ChatFormatting.GREEN))
-                    .append(Component.literal("，灵气强度 " + strength).withStyle(ChatFormatting.BLUE)), true);
+            player.displayClientMessage(Component.translatable("message.abyssredemptiondaomod.wenling_found",
+                    direction, String.format("%.1f", distance), state.getBlock().getName(), strength), true);
 
             if (level instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(ParticleTypes.ENCHANTED_HIT,
@@ -83,8 +78,10 @@ public class WenlingDaggerItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents,
                                 TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.literal("品阶：" + SoulSwordItem.getRealmName(SWORD_REALM)).withStyle(ChatFormatting.AQUA));
-        tooltipComponents.add(Component.literal("筑基及以上方可催动感应灵气源。").withStyle(ChatFormatting.GRAY));
+        tooltipComponents.add(Component.translatable("tooltip.abyssredemptiondaomod.weapon_rank",
+                Component.translatable("gui.daomod.realm" + SWORD_REALM)).withStyle(ChatFormatting.AQUA));
+        tooltipComponents.add(Component.translatable("tooltip.abyssredemptiondaomod.wenling_use")
+                .withStyle(ChatFormatting.GRAY));
     }
 
     private static Optional<BlockPos> findNearestAuraSource(Level level, Player player) {
@@ -109,7 +106,7 @@ public class WenlingDaggerItem extends Item {
         return Optional.ofNullable(nearest);
     }
 
-    private static String describeDirection(Player player, BlockPos target) {
+    private static Component describeDirection(Player player, BlockPos target) {
         Vec3 look = player.getLookAngle();
         Vec3 forward = new Vec3(look.x, 0.0, look.z).normalize();
         Vec3 targetCenter = Vec3.atCenterOf(target);
@@ -120,11 +117,12 @@ public class WenlingDaggerItem extends Item {
         double side = forward.z * toTarget.x - forward.x * toTarget.z;
 
         if (forwardDot > 0.55) {
-            return "前方";
+            return Component.translatable("direction.abyssredemptiondaomod.forward");
         }
         if (forwardDot < -0.55) {
-            return "身后";
+            return Component.translatable("direction.abyssredemptiondaomod.behind");
         }
-        return side > 0.0 ? "左侧" : "右侧";
+        return Component.translatable(side > 0.0
+                ? "direction.abyssredemptiondaomod.left" : "direction.abyssredemptiondaomod.right");
     }
 }

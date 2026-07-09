@@ -49,7 +49,7 @@ public class DanItem extends Item {
         // 检查是否有丹毒反噬效果，有则不能吃
         if (player.hasEffect(ModEffects.DAN_DU_FAN_SHI)) {
             if (!level.isClientSide) {
-                player.displayClientMessage(Component.literal("§c丹毒未消，无法服丹！"), true);
+                player.displayClientMessage(Component.translatable("message.abyssredemptiondaomod.dan_blocked"), true);
             }
             return InteractionResultHolder.fail(itemstack);
         }
@@ -84,7 +84,7 @@ public class DanItem extends Item {
                 player.addEffect(new MobEffectInstance(ModEffects.DAN_DU_FAN_SHI, FAN_SHI_DURATION, 0, false, true, true));
                 // 也给予视觉反馈的反胃效果
                 player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 2));
-                player.displayClientMessage(Component.literal("§c§l⚠ 丹毒反噬！经脉封闭，修为停滞！"), true);
+                player.displayClientMessage(Component.translatable("message.abyssredemptiondaomod.dan_backlash"), true);
                 danDu = 0; // 反噬后重置丹毒
 }
             // 用自定义丹毒效果显示层数（图标显示，持续 10 分钟）
@@ -109,7 +109,7 @@ public class DanItem extends Item {
             ));
 
             // 4. 发送突破提示
-            player.displayClientMessage(Component.literal("§e丹药入腹，修为精进！"), true);
+            player.displayClientMessage(Component.translatable("message.abyssredemptiondaomod.dan_consumed"), true);
         }
 
         return result;

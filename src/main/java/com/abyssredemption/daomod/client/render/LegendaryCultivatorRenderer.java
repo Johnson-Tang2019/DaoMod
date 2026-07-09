@@ -1,16 +1,17 @@
 package com.abyssredemption.daomod.client.render;
 
 import com.abyssredemption.daomod.AbsDaoMod;
+import com.abyssredemption.daomod.client.model.DaoBeastModel;
 import com.abyssredemption.daomod.entity.LegendaryCultivatorEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
+import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
-public class LegendaryCultivatorRenderer extends HumanoidMobRenderer<LegendaryCultivatorEntity,
-        HumanoidModel<LegendaryCultivatorEntity>> {
+public class LegendaryCultivatorRenderer extends MobRenderer<LegendaryCultivatorEntity,
+        DaoBeastModel<LegendaryCultivatorEntity>> {
+    private final DaoBeastModel<LegendaryCultivatorEntity>[] models;
     private static final String[] NAMES = {"xuanyuan", "xuanyuan", "dugu_qiubai", "qinglian_jianxian",
             "ye_gucheng", "shen_duzhou", "nameless_artificer", "gongshu_ban", "ge_hong", "ouye_zi",
             "su_hongyi", "ming_wang", "dizang", "damo", "blood_river_ancestor", "wuhua", "mo_xuan",
@@ -18,7 +19,18 @@ public class LegendaryCultivatorRenderer extends HumanoidMobRenderer<LegendaryCu
             "xingtian", "xuanyuan_fourteen"};
 
     public LegendaryCultivatorRenderer(EntityRendererProvider.Context context) {
-        super(context, new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER)), 0.55f);
+        super(context, new DaoBeastModel<>(context.bakeLayer(DaoBeastModel.layer(4)), 4), 0.75f);
+        models = new DaoBeastModel[25];
+        for (int i = 0; i < models.length; i++) {
+            models[i] = new DaoBeastModel<>(context.bakeLayer(DaoBeastModel.layer(i + 4)), i + 4);
+        }
+    }
+
+    @Override
+    public void render(LegendaryCultivatorEntity entity, float yaw, float partialTick, PoseStack poseStack,
+                       MultiBufferSource buffers, int light) {
+        model = models[Math.max(0, Math.min(24, entity.getLegend() - 1))];
+        super.render(entity, yaw, partialTick, poseStack, buffers, light);
     }
 
     @Override

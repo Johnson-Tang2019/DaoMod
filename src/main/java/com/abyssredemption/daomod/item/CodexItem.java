@@ -3,6 +3,7 @@ package com.abyssredemption.daomod.item;
 import com.abyssredemption.daomod.AbsDaoMod;
 import com.abyssredemption.daomod.network.CultivationPayload;
 import com.abyssredemption.daomod.registry.ModAttachments;
+import com.abyssredemption.daomod.registry.ModBlocks;
 import java.util.List;
 import java.util.Set;
 import net.minecraft.ChatFormatting;
@@ -24,12 +25,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 
 public class CodexItem extends Item {
-    private static final ResourceKey<Level> CHENHUAN_REALM = dimension("chenhuan_realm");
+    private static final ResourceKey<Level> LINGXU_REALM = dimension("lingxu_realm");
     private static final ResourceKey<Level> DILUO_ABYSS = dimension("diluo_abyss");
     private static final ResourceKey<Level> ETERNAL_IMMORTAL_REALM = dimension("eternal_immortal_realm");
     private final String categoryKey;
@@ -142,6 +144,27 @@ public class CodexItem extends Item {
         player.getCooldowns().addCooldown(this, cooldown);
         player.awardStat(Stats.ITEM_USED.get(this));
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
+    }
+
+    @Override
+    public InteractionResult useOn(UseOnContext context) {
+        var holder = ModBlocks.CODEX_RESOURCE_BLOCKS.get(abilityId);
+        if (holder == null) {
+            return super.useOn(context);
+        }
+        var level = context.getLevel();
+        var target = context.getClickedPos().relative(context.getClickedFace());
+        var state = holder.get().defaultBlockState();
+        if (!level.getBlockState(target).canBeReplaced() || !state.canSurvive(level, target)) {
+            return InteractionResult.FAIL;
+        }
+        if (!level.isClientSide) {
+            level.setBlock(target, state, 11);
+            if (context.getPlayer() == null || !context.getPlayer().getAbilities().instabuild) {
+                context.getItemInHand().shrink(1);
+            }
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override
@@ -591,14 +614,19 @@ public class CodexItem extends Item {
 
     private boolean crossWorldGate(Level level, Player player) {
         if (!(player instanceof ServerPlayer serverPlayer)) return false;
-        ResourceKey<Level> targetKey = level.dimension() == Level.OVERWORLD ? CHENHUAN_REALM
-                : level.dimension() == CHENHUAN_REALM ? DILUO_ABYSS
+        ResourceKey<Level> targetKey = level.dimension() == Level.OVERWORLD ? LINGXU_REALM
+                : level.dimension() == LINGXU_REALM ? DILUO_ABYSS
                 : level.dimension() == DILUO_ABYSS ? ETERNAL_IMMORTAL_REALM : Level.OVERWORLD;
         ServerLevel target = serverPlayer.getServer().getLevel(targetKey);
         if (target == null) return false;
         int x = player.blockPosition().getX();
         int z = player.blockPosition().getZ();
         int y = target.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z) + 1;
+        if (targetKey == ETERNAL_IMMORTAL_REALM && y <= target.getMinBuildHeight() + 2) {
+            x = 0;
+            z = 0;
+            y = target.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z) + 1;
+        }
         y = Math.max(target.getMinBuildHeight() + 2, Math.min(target.getMaxBuildHeight() - 2, y));
         boolean moved = serverPlayer.teleportTo(target, x + 0.5, y, z + 0.5, Set.of(),
                 player.getYRot(), player.getXRot());

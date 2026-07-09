@@ -1,1 +1,10 @@
-{"type":"abyssredemptiondaomod:eternal_immortal_realm","generator":{"type":"minecraft:noise","biome_source":{"type":"minecraft:fixed","biome":"minecraft:end_highlands"},"settings":"minecraft:overworld"}}
+{
+  "type": "abyssredemptiondaomod:eternal_immortal_realm",
+  "generator": {
+    "type": "minecraft:noise",
+    "biome_source": {
+      "type": "minecraft:the_end"
+    },
+    "settings": "minecraft:end"
+  }
+}

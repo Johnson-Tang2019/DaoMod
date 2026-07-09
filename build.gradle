@@ -31,6 +31,8 @@ repositories {
         name = "IllusiveC4"
         url = "https://maven.theillusivec4.top/"
     }
+    maven { url = "https://maven.ftb.dev/releases" }
+    maven { url = "https://maven.architectury.dev/" }
 }
 
 base {
@@ -107,6 +109,10 @@ dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
     compileOnly "top.theillusivec4.curios:curios-neoforge:9.5.1+1.21.1:api"
     localRuntime "top.theillusivec4.curios:curios-neoforge:9.5.1+1.21.1"
+    localRuntime "dev.architectury:architectury-neoforge:13.0.8"
+    localRuntime "dev.ftb.mods:ftb-library-neoforge:2101.1.31"
+    localRuntime "dev.ftb.mods:ftb-teams-neoforge:2101.1.9"
+    localRuntime "dev.ftb.mods:ftb-quests-neoforge:2101.1.27"
 
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
@@ -130,6 +136,19 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 }
+
+tasks.register('syncFtbQuestsClient', Sync) {
+    from 'config/ftbquests/quests'
+    into 'runs/client/config/ftbquests/quests'
+}
+tasks.register('syncFtbQuestsServer', Sync) {
+    from 'config/ftbquests/quests'
+    into 'runs/server/config/ftbquests/quests'
+}
+tasks.register('syncFtbQuests') {
+    dependsOn 'syncFtbQuestsClient', 'syncFtbQuestsServer'
+}
+tasks.matching { it.name in ['runClient', 'runServer'] }.configureEach { dependsOn 'syncFtbQuests' }
 
 // This block of code expands all declared replace properties in the specified resource targets.
 // A missing property will result in an error. Properties are expanded using ${} Groovy notation.

@@ -39,12 +39,27 @@ public class LegendaryCultivatorEntity extends Monster {
         super(type, level);
         this.legend = legend;
         this.xpReward = 120;
+        var health = getAttribute(Attributes.MAX_HEALTH);
+        if (health != null) {
+            health.setBaseValue(maxHealthForLegend(legend));
+            setHealth((float) health.getBaseValue());
+        }
         this.bossEvent = new ServerBossEvent(getDisplayName(), BossEvent.BossBarColor.PURPLE,
                 BossEvent.BossBarOverlay.PROGRESS);
     }
 
     public int getLegend() {
         return legend;
+    }
+
+    public static double maxHealthForLegend(int legend) {
+        return switch (Math.max(0, Math.min(4, (legend - 1) / 5))) {
+            case 1 -> 320.0;
+            case 2 -> 420.0;
+            case 3 -> 540.0;
+            case 4 -> 680.0;
+            default -> 240.0;
+        };
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -105,6 +120,9 @@ public class LegendaryCultivatorEntity extends Monster {
         goalSelector.addGoal(7, new RandomLookAroundGoal(this));
         targetSelector.addGoal(1, new HurtByTargetGoal(this));
         targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, SectGuardianEntity.class, true));
+        targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, LegendaryCultivatorEntity.class, 10,
+                true, false, other -> other != this));
     }
 
     @Override

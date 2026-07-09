@@ -1,1 +1,17 @@
-{"type":"abyssredemptiondaomod:diluo_abyss","generator":{"type":"minecraft:noise","biome_source":{"type":"minecraft:fixed","biome":"minecraft:basalt_deltas"},"settings":"minecraft:overworld"}}
+{
+  "type": "abyssredemptiondaomod:diluo_abyss",
+  "generator": {
+    "type": "minecraft:noise",
+    "biome_source": {
+      "type": "minecraft:checkerboard",
+      "biomes": [
+        "minecraft:basalt_deltas",
+        "minecraft:soul_sand_valley",
+        "minecraft:crimson_forest",
+        "minecraft:warped_forest"
+      ],
+      "scale": 3
+    },
+    "settings": "minecraft:overworld"
+  }
+}

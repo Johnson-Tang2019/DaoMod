@@ -1,6 +1,7 @@
 package com.abyssredemption.daomod.client;
 
 import com.abyssredemption.daomod.AbsDaoMod;
+import com.abyssredemption.daomod.client.model.DaoBeastModel;
 import com.abyssredemption.daomod.client.render.LegendaryCultivatorRenderer;
 import com.abyssredemption.daomod.client.render.SectGuardianRenderer;
 import com.abyssredemption.daomod.client.render.SwordBeamRenderer;
@@ -12,6 +13,14 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
 @EventBusSubscriber(modid = AbsDaoMod.MODID, value = Dist.CLIENT)
 public class ModClientEvents {
+    @SubscribeEvent
+    public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        for (int variant = 0; variant < 29; variant++) {
+            int modelVariant = variant;
+            event.registerLayerDefinition(DaoBeastModel.layer(variant), () -> DaoBeastModel.createBodyLayer(modelVariant));
+        }
+    }
+
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntities.SWORD_BEAM.get(), SwordBeamRenderer::new);
@@ -46,4 +55,3 @@ public class ModClientEvents {
         event.registerEntityRenderer(ModEntities.XUANYUAN_FOURTEEN.get(), LegendaryCultivatorRenderer::new);
     }
 }
-

@@ -39,3 +39,7 @@ runs/
 **/src/generated/**/.cache/
 repo/
 !**/src/**/repo/
+
+### Local generated files ###
+config/
+tmp/

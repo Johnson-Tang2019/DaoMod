@@ -1,0 +1,1 @@
+﻿{"type":"minecraft:block","pools":[{"rolls":1,"entries":[{"type":"minecraft:item","name":"abyssredemptiondaomod:yinyang_nizhuan_cao"}],"conditions":[{"condition":"minecraft:survives_explosion"}]}]}

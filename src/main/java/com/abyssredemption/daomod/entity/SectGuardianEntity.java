@@ -51,6 +51,9 @@ public class SectGuardianEntity extends Monster {
         targetSelector.addGoal(1, new HurtByTargetGoal(this).setAlertOthers());
         targetSelector.addGoal(2, new NearestAttackableTargetGoal<Player>(
                 this, Player.class, 10, true, false, this::isHostileTo));
+        targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, SectGuardianEntity.class, 10,
+                true, false, other -> other instanceof SectGuardianEntity guardian && guardian.getSect() != sect));
+        targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, LegendaryCultivatorEntity.class, true));
     }
 
     private boolean isHostileTo(net.minecraft.world.entity.LivingEntity entity) {

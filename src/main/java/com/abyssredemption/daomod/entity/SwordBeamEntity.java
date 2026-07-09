@@ -1,6 +1,7 @@
 package com.abyssredemption.daomod.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
@@ -31,9 +32,13 @@ public class SwordBeamEntity extends AbstractHurtingProjectile implements ItemSu
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
         if (!this.level().isClientSide) {
-            result.getEntity().hurt(this.damageSources().magic(), this.damage);
+            result.getEntity().hurt(swordDamageSource(), this.damage);
             this.discard(); // 击中消失
         }
+    }
+
+    public DamageSource swordDamageSource() {
+        return getOwner() == null ? damageSources().magic() : damageSources().indirectMagic(this, getOwner());
     }
 
     @Override

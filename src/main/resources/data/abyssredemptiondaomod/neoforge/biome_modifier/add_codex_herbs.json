@@ -1,0 +1,29 @@
+﻿{
+    "step":  "vegetal_decoration",
+    "features":  [
+                     "abyssredemptiondaomod:juling_cao",
+                     "abyssredemptiondaomod:huoxue_teng",
+                     "abyssredemptiondaomod:yingguang_tai",
+                     "abyssredemptiondaomod:ningqi_hua",
+                     "abyssredemptiondaomod:bihan_cao",
+                     "abyssredemptiondaomod:shexian_guo",
+                     "abyssredemptiondaomod:tiegu_hua",
+                     "abyssredemptiondaomod:zuixian_tao",
+                     "abyssredemptiondaomod:bihuo_shenzao",
+                     "abyssredemptiondaomod:qianji_yin",
+                     "abyssredemptiondaomod:jianyi_cao",
+                     "abyssredemptiondaomod:tunling_teng",
+                     "abyssredemptiondaomod:qiqiao_linglong_guo",
+                     "abyssredemptiondaomod:kurong_shen",
+                     "abyssredemptiondaomod:jihan_binglian",
+                     "abyssredemptiondaomod:niepan_hua",
+                     "abyssredemptiondaomod:minghe_duya_hua",
+                     "abyssredemptiondaomod:yinyang_nizhuan_cao",
+                     "abyssredemptiondaomod:wudao_cha",
+                     "abyssredemptiondaomod:zaohua_qinglian",
+                     "abyssredemptiondaomod:sansheng_shishang_hua",
+                     "abyssredemptiondaomod:hundun_qingti"
+                 ],
+    "type":  "neoforge:add_features",
+    "biomes":  "#abyssredemptiondaomod:cultivation_worlds"
+}

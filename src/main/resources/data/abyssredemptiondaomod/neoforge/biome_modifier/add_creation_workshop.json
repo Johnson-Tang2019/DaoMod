@@ -1,6 +1,6 @@
 {
   "type": "neoforge:add_features",
-  "biomes": ["#c:is_plains", "#c:is_forest"],
+  "biomes": "#abyssredemptiondaomod:plains_or_forest",
   "features": "abyssredemptiondaomod:creation_workshop",
   "step": "surface_structures"
 }

@@ -74,8 +74,8 @@ public class SoulSwordItem extends SwordItem {
 
         if (isAboveRealm(player)) {
             if (!level.isClientSide) {
-                player.displayClientMessage(Component.literal("此剑品阶为" + getRealmName(swordRealm)
-                        + "，当前境界不足，只能作普通剑使用。"), true);
+                player.displayClientMessage(Component.translatable("message.abyssredemptiondaomod.sword_realm_low",
+                        Component.translatable("gui.daomod.realm" + swordRealm)), true);
             }
             return InteractionResultHolder.fail(itemstack);
         }
@@ -86,7 +86,7 @@ public class SoulSwordItem extends SwordItem {
         }
 
         if (!level.isClientSide) {
-            player.displayClientMessage(Component.literal("炁不足，无法催动灵剑。"), true);
+            player.displayClientMessage(Component.translatable("message.abyssredemptiondaomod.sword_qi_low"), true);
         }
         return InteractionResultHolder.fail(itemstack);
     }
@@ -115,7 +115,7 @@ public class SoulSwordItem extends SwordItem {
                         data.getStage(), data.getRealmProgress(), data.getKarma(), data.getSect()));
                 shootBeam(level, serverPlayer, player.getUsedItemHand(), seconds);
             } else {
-                player.displayClientMessage(Component.literal("炁已枯竭，剑气自溃。"), true);
+                player.displayClientMessage(Component.translatable("message.abyssredemptiondaomod.sword_beam_failed"), true);
             }
         }
     }
@@ -123,8 +123,10 @@ public class SoulSwordItem extends SwordItem {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents,
                                 TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.literal("品阶：" + getRealmName(swordRealm)).withStyle(ChatFormatting.AQUA));
-        tooltipComponents.add(Component.literal("境界不足时无法催动剑气，近战伤害降低。").withStyle(ChatFormatting.GRAY));
+        tooltipComponents.add(Component.translatable("tooltip.abyssredemptiondaomod.weapon_rank",
+                Component.translatable("gui.daomod.realm" + swordRealm)).withStyle(ChatFormatting.AQUA));
+        tooltipComponents.add(Component.translatable("tooltip.abyssredemptiondaomod.sword_restriction")
+                .withStyle(ChatFormatting.GRAY));
     }
 
     private void shootBeam(Level level, ServerPlayer player, InteractionHand usedHand, float power) {

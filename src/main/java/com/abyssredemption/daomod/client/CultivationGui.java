@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -14,36 +15,52 @@ import net.neoforged.neoforge.client.event.ScreenEvent;
 
 @EventBusSubscriber(modid = AbsDaoMod.MODID, value = Dist.CLIENT)
 public class CultivationGui {
+    private static final int WIDTH = 132;
 
     @SubscribeEvent
     public static void onRenderGui(ScreenEvent.Render.Post event) {
         Minecraft mc = Minecraft.getInstance();
-        if (!(event.getScreen() instanceof InventoryScreen inventoryScreen)) {
-            return;
-        }
-        if(mc.player == null) return;
+        if (!(event.getScreen() instanceof InventoryScreen screen) || mc.player == null) return;
 
         CultivationData data = mc.player.getData(ModAttachments.CULTIVATION);
         GuiGraphics graphics = event.getGuiGraphics();
-
-        int guiLeft = inventoryScreen.getGuiLeft() + 130;
-        int guiTop = inventoryScreen.getGuiTop() + 60;
-        int color = 0xff67d1;
+        int x = screen.getGuiLeft() + screen.getXSize() + 6;
+        if (x + WIDTH > graphics.guiWidth()) x = Math.max(4, screen.getGuiLeft() - WIDTH - 6);
+        int y = screen.getGuiTop();
 
         graphics.pose().pushPose();
         graphics.pose().translate(0, 0, 2000);
+        graphics.fill(x, y, x + WIDTH, y + 122, 0xd8181d1a);
+        graphics.fill(x, y, x + WIDTH, y + 2, 0xff67d18a);
 
-        Component qiLabel = Component.translatable("gui.daomod.qi", data.getQi());
-        Component karmaLabel = Component.translatable("gui.daomod.karma", data.getKarma());
-        Component sectLabel = Component.translatable("gui.daomod.sect", getSectName(data.getSect()));
+        draw(graphics, mc, Component.translatable("gui.daomod.attributes"), x + 8, y + 8, 0xffd9efdc);
+        draw(graphics, mc, getStageName(data.getStage(), data.getRealm()), x + 8, y + 21, 0xff67d18a);
 
-        Component realmText = getStageName(data.getStage(), data.getRealm());
+        int progress = Math.max(0, Math.min(99, data.getRealmProgress()));
+        graphics.fill(x + 8, y + 34, x + 124, y + 39, 0xff303832);
+        graphics.fill(x + 8, y + 34, x + 8 + Math.round(116 * progress / 99f), y + 39, 0xff59b979);
+        draw(graphics, mc, Component.translatable("gui.daomod.progress", progress), x + 8, y + 42, 0xffaeb8b0);
 
-        graphics.drawString(mc.font, realmText, guiLeft, guiTop, color, false);
-        graphics.drawString(mc.font, qiLabel, guiLeft, guiTop + 10, color, false);
-        graphics.drawString(mc.font, data.getRealmProgress() + "", guiLeft, guiTop + 20, color, false);
-        graphics.drawString(mc.font, karmaLabel, guiLeft, guiTop + 30, 0xaa55ff, false);
-        graphics.drawString(mc.font, sectLabel, guiLeft, guiTop + 40, 0xe4b95f, false);
+        long maxQi = CultivationData.getMaxQi(data.getRealm(), data.getStage());
+        draw(graphics, mc, Component.translatable("gui.daomod.qi_pair", data.getQi(), maxQi), x + 8, y + 54, 0xff65cfe8);
+        draw(graphics, mc, Component.translatable("gui.daomod.health_pair",
+                Math.round(mc.player.getHealth()), Math.round(mc.player.getMaxHealth())), x + 8, y + 65, 0xffff7777);
+        draw(graphics, mc, Component.translatable("gui.daomod.combat_pair",
+                oneDecimal(mc.player.getAttributeValue(Attributes.ATTACK_DAMAGE)),
+                oneDecimal(mc.player.getAttributeValue(Attributes.ARMOR))), x + 8, y + 76, 0xffffcf70);
+        draw(graphics, mc, Component.translatable("gui.daomod.speed",
+                oneDecimal(mc.player.getAttributeValue(Attributes.MOVEMENT_SPEED) * 20)), x + 8, y + 87, 0xff8edfa5);
+        draw(graphics, mc, Component.translatable("gui.daomod.karma", data.getKarma()), x + 8, y + 98, 0xffc58cff);
+        draw(graphics, mc, Component.translatable("gui.daomod.sect", getSectName(data.getSect())), x + 8, y + 109, 0xffe4b95f);
+        graphics.pose().popPose();
+    }
+
+    private static void draw(GuiGraphics graphics, Minecraft mc, Component text, int x, int y, int color) {
+        graphics.drawString(mc.font, text, x, y, color, false);
+    }
+
+    private static String oneDecimal(double value) {
+        return String.format(java.util.Locale.ROOT, "%.1f", value);
     }
 
     private static Component getSectName(int sect) {
@@ -51,31 +68,12 @@ public class CultivationGui {
     }
 
     private static Component getRealmName(int realm) {
-        return switch (realm) {
-            case 1 -> Component.translatable("gui.daomod.realm1");
-            case 2 -> Component.translatable("gui.daomod.realm2");
-            case 3 -> Component.translatable("gui.daomod.realm3");
-            case 4 -> Component.translatable("gui.daomod.realm4");
-            case 5 -> Component.translatable("gui.daomod.realm5");
-            case 6 -> Component.translatable("gui.daomod.realm6");
-            case 7 -> Component.translatable("gui.daomod.realm7");
-            case 8 -> Component.translatable("gui.daomod.realm8");
-            default -> Component.translatable("gui.daomod.realm0");
-        };
+        return Component.translatable("gui.daomod.realm" + Math.max(0, Math.min(8, realm)));
     }
 
     private static Component getStageName(int stage, int realm) {
-        if(stage == 9) return Component.translatable("gui.daomod.stage9");
-        return switch (stage) {
-            case 1 -> Component.translatable("gui.daomod.stage1", getRealmName(realm));
-            case 2 -> Component.translatable("gui.daomod.stage2", getRealmName(realm));
-            case 3 -> Component.translatable("gui.daomod.stage3", getRealmName(realm));
-            case 4 -> Component.translatable("gui.daomod.stage4", getRealmName(realm));
-            case 5 -> Component.translatable("gui.daomod.stage5", getRealmName(realm));
-            case 6 -> Component.translatable("gui.daomod.stage6", getRealmName(realm));
-            case 7 -> Component.translatable("gui.daomod.stage7", getRealmName(realm));
-            case 8 -> Component.translatable("gui.daomod.stage8", getRealmName(realm + 1));
-            default -> Component.translatable("gui.daomod.stage0", getRealmName(realm));
-        };
+        int safeStage = Math.max(0, Math.min(8, stage));
+        return Component.translatable("gui.daomod.stage" + safeStage,
+                getRealmName(safeStage == 8 ? realm + 1 : realm));
     }
 }

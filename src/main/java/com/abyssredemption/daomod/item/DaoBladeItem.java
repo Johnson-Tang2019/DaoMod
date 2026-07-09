@@ -30,8 +30,10 @@ public class DaoBladeItem extends SwordItem {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents,
                                 TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.literal("品阶：" + SoulSwordItem.getRealmName(bladeRealm)).withStyle(ChatFormatting.AQUA));
-        tooltipComponents.add(Component.literal("刀类兵刃伤害更高，但无法催动剑气或御剑飞行。").withStyle(ChatFormatting.GRAY));
-        tooltipComponents.add(Component.literal("境界不足时近战伤害降低。").withStyle(ChatFormatting.DARK_GRAY));
+        tooltipComponents.add(Component.translatable("tooltip.abyssredemptiondaomod.weapon_rank",
+                Component.translatable("gui.daomod.realm" + bladeRealm)).withStyle(ChatFormatting.AQUA));
+        tooltipComponents.add(Component.translatable("tooltip.abyssredemptiondaomod.blade_style").withStyle(ChatFormatting.GRAY));
+        tooltipComponents.add(Component.translatable("tooltip.abyssredemptiondaomod.blade_restriction")
+                .withStyle(ChatFormatting.DARK_GRAY));
     }
 }

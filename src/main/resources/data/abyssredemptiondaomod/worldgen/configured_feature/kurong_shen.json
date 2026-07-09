@@ -1,0 +1,30 @@
+﻿{
+    "config":  {
+                   "tries":  12,
+                   "y_spread":  2,
+                   "xz_spread":  5,
+                   "feature":  {
+                                   "feature":  {
+                                                   "config":  {
+                                                                  "to_place":  {
+                                                                                   "state":  {
+                                                                                                 "Name":  "abyssredemptiondaomod:kurong_shen"
+                                                                                             },
+                                                                                   "type":  "minecraft:simple_state_provider"
+                                                                               }
+                                                              },
+                                                   "type":  "minecraft:simple_block"
+                                               },
+                                   "placement":  [
+                                                     {
+                                                         "predicate":  {
+                                                                           "type":  "minecraft:matching_blocks",
+                                                                           "blocks":  "minecraft:air"
+                                                                       },
+                                                         "type":  "minecraft:block_predicate_filter"
+                                                     }
+                                                 ]
+                               }
+               },
+    "type":  "minecraft:flower"
+}

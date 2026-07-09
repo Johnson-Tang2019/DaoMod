@@ -1,7 +1,11 @@
 package com.abyssredemption.daomod.worldgen;
 
+import com.abyssredemption.daomod.registry.ModItems;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -65,7 +69,28 @@ public class SectOutpostFeature extends Feature<NoneFeatureConfiguration> {
         set(level, center.offset(0, 8, 0), palette.finial);
 
         decorate(level, center);
+        placeTreasure(level, center, context.random());
         return true;
+    }
+
+    private void placeTreasure(WorldGenLevel level, BlockPos center, RandomSource random) {
+        BlockPos pos = center.offset(0, 1, 2);
+        set(level, pos, Blocks.BARREL.defaultBlockState());
+        if (!(level.getBlockEntity(pos) instanceof Container container)) return;
+
+        String rank = sect <= 4 ? "earth" : sect <= 6 ? "heaven" : "ancient";
+        putRandom(container, 0, ModItems.getCodexPool("artifact", rank), random);
+        putRandom(container, 1, ModItems.getCodexPool("herb", rank), random);
+        putRandom(container, 2, ModItems.getCodexPool("ore", rank), random);
+        container.setChanged();
+    }
+
+    private static void putRandom(Container container, int slot,
+                                  java.util.List<? extends net.neoforged.neoforge.registries.DeferredItem<?>> pool,
+                                  RandomSource random) {
+        if (!pool.isEmpty()) {
+            container.setItem(slot, new ItemStack(pool.get(random.nextInt(pool.size())).get()));
+        }
     }
 
     private void decorate(WorldGenLevel level, BlockPos center) {
