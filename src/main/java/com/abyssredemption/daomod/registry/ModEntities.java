@@ -1,6 +1,7 @@
 package com.abyssredemption.daomod.registry;
 
 import com.abyssredemption.daomod.AbsDaoMod;
+import com.abyssredemption.daomod.entity.DaoRegionalBossEntity;
 import com.abyssredemption.daomod.entity.LegendaryCultivatorEntity;
 import com.abyssredemption.daomod.entity.SectGuardianEntity;
 import com.abyssredemption.daomod.entity.SwordBeamEntity;
@@ -82,6 +83,20 @@ public class ModEntities {
             legend("xingtian", 24);
     public static final DeferredHolder<EntityType<?>, EntityType<LegendaryCultivatorEntity>> XUANYUAN_FOURTEEN =
             legend("xuanyuan_fourteen", 25);
+    public static final DeferredHolder<EntityType<?>, EntityType<DaoRegionalBossEntity>> SHENTU_STELE_SPIRIT =
+            regional("shentu_stele_spirit", 1);
+    public static final DeferredHolder<EntityType<?>, EntityType<DaoRegionalBossEntity>> LEIZE_ANCIENT_DRAGON =
+            regional("leize_ancient_dragon", 2);
+    public static final DeferredHolder<EntityType<?>, EntityType<DaoRegionalBossEntity>> SWORD_TOMB_REMNANT =
+            regional("sword_tomb_remnant", 3);
+    public static final DeferredHolder<EntityType<?>, EntityType<DaoRegionalBossEntity>> FIRE_MANDRILL_KING =
+            regional("fire_mandrill_king", 4);
+    public static final DeferredHolder<EntityType<?>, EntityType<DaoRegionalBossEntity>> MINGHAI_SOUL_FERRY_MONK =
+            regional("minghai_soul_ferry_monk", 5);
+    public static final DeferredHolder<EntityType<?>, EntityType<DaoRegionalBossEntity>> GUIXU_MERFOLK_EMPEROR_ECHO =
+            regional("guixu_merfolk_emperor_echo", 6);
+    public static final DeferredHolder<EntityType<?>, EntityType<DaoRegionalBossEntity>> VOID_DEMON_LARVA =
+            regional("void_demon_larva", 7);
 
     private static DeferredHolder<EntityType<?>, EntityType<SectGuardianEntity>> guardian(String name, int sect) {
         return ENTITIES.register(name, () -> EntityType.Builder.<SectGuardianEntity>of(
@@ -97,6 +112,14 @@ public class ModEntities {
         return ENTITIES.register(name, () -> EntityType.Builder.<LegendaryCultivatorEntity>of(
                         (type, level) -> new LegendaryCultivatorEntity(type, level, variant), MobCategory.MONSTER)
                 .sized(width, height)
+                .clientTrackingRange(12)
+                .build(name));
+    }
+
+    private static DeferredHolder<EntityType<?>, EntityType<DaoRegionalBossEntity>> regional(String name, int variant) {
+        return ENTITIES.register(name, () -> EntityType.Builder.<DaoRegionalBossEntity>of(
+                        (type, level) -> new DaoRegionalBossEntity(type, level, variant), MobCategory.MONSTER)
+                .sized(variant == 2 || variant == 7 ? 1.25f : 0.85f, variant == 2 || variant == 7 ? 2.6f : 2.2f)
                 .clientTrackingRange(12)
                 .build(name));
     }
@@ -133,6 +156,13 @@ public class ModEntities {
         event.put(HOUYI.get(), legendaryAttributes);
         event.put(XINGTIAN.get(), legendaryAttributes);
         event.put(XUANYUAN_FOURTEEN.get(), legendaryAttributes);
+        event.put(SHENTU_STELE_SPIRIT.get(), legendaryAttributes);
+        event.put(LEIZE_ANCIENT_DRAGON.get(), legendaryAttributes);
+        event.put(SWORD_TOMB_REMNANT.get(), legendaryAttributes);
+        event.put(FIRE_MANDRILL_KING.get(), legendaryAttributes);
+        event.put(MINGHAI_SOUL_FERRY_MONK.get(), legendaryAttributes);
+        event.put(GUIXU_MERFOLK_EMPEROR_ECHO.get(), legendaryAttributes);
+        event.put(VOID_DEMON_LARVA.get(), legendaryAttributes);
     }
 
     public static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {

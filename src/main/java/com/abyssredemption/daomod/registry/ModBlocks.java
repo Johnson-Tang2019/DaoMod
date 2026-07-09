@@ -1,6 +1,7 @@
 package com.abyssredemption.daomod.registry;
 
 import com.abyssredemption.daomod.AbsDaoMod;
+import com.abyssredemption.daomod.block.BossSealBlock;
 import com.abyssredemption.daomod.block.PuTuan;
 import java.util.HashMap;
 import java.util.Map;
@@ -64,4 +65,12 @@ public class ModBlocks {
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.STONE)
                     .lightLevel(state -> 2)));
+
+    public static final DeferredBlock<Block> BOSS_SEAL = BLOCKS.register("boss_seal",
+            () -> new BossSealBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_PURPLE)
+                    .strength(8.0f, 1200.0f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.ANCIENT_DEBRIS)
+                    .lightLevel(state -> state.getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.POWERED) ? 12 : 5)));
 }

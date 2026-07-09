@@ -1,16 +1,12 @@
 package com.abyssredemption.daomod.item;
 
-import com.abyssredemption.daomod.AbsDaoMod;
 import com.abyssredemption.daomod.network.CultivationPayload;
 import com.abyssredemption.daomod.registry.ModAttachments;
 import com.abyssredemption.daomod.registry.ModBlocks;
+import com.abyssredemption.daomod.world.DimensionTravelHandler;
 import java.util.List;
-import java.util.Set;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -27,13 +23,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 
 public class CodexItem extends Item {
-    private static final ResourceKey<Level> LINGXU_REALM = dimension("lingxu_realm");
-    private static final ResourceKey<Level> DILUO_ABYSS = dimension("diluo_abyss");
-    private static final ResourceKey<Level> ETERNAL_IMMORTAL_REALM = dimension("eternal_immortal_realm");
     private final String categoryKey;
     private final String rankKey;
     private final String abilityId;
@@ -614,32 +606,7 @@ public class CodexItem extends Item {
 
     private boolean crossWorldGate(Level level, Player player) {
         if (!(player instanceof ServerPlayer serverPlayer)) return false;
-        ResourceKey<Level> targetKey = level.dimension() == Level.OVERWORLD ? LINGXU_REALM
-                : level.dimension() == LINGXU_REALM ? DILUO_ABYSS
-                : level.dimension() == DILUO_ABYSS ? ETERNAL_IMMORTAL_REALM : Level.OVERWORLD;
-        ServerLevel target = serverPlayer.getServer().getLevel(targetKey);
-        if (target == null) return false;
-        int x = player.blockPosition().getX();
-        int z = player.blockPosition().getZ();
-        int y = target.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z) + 1;
-        if (targetKey == ETERNAL_IMMORTAL_REALM && y <= target.getMinBuildHeight() + 2) {
-            x = 0;
-            z = 0;
-            y = target.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z) + 1;
-        }
-        y = Math.max(target.getMinBuildHeight() + 2, Math.min(target.getMaxBuildHeight() - 2, y));
-        boolean moved = serverPlayer.teleportTo(target, x + 0.5, y, z + 0.5, Set.of(),
-                player.getYRot(), player.getXRot());
-        if (!moved) return false;
-        player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 20 * 10, 0));
-        player.displayClientMessage(Component.translatable("message.abyssredemptiondaomod.geshi_zhimen",
-                Component.translatable("dimension.abyssredemptiondaomod." + targetKey.location().getPath())), true);
-        return true;
-    }
-
-    private static ResourceKey<Level> dimension(String name) {
-        return ResourceKey.create(Registries.DIMENSION,
-                ResourceLocation.fromNamespaceAndPath(AbsDaoMod.MODID, name));
+        return DimensionTravelHandler.travelNext(serverPlayer);
     }
 
     private boolean shakeWorld(Level level, Player player) {

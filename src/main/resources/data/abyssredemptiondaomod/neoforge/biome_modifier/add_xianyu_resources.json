@@ -1,0 +1,12 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#abyssredemptiondaomod:xianyu_biomes",
+  "features": [
+    "abyssredemptiondaomod:suiyue_sha",
+    "abyssredemptiondaomod:zaohua_qinglian",
+    "abyssredemptiondaomod:hundun_qingti",
+    "abyssredemptiondaomod:butian_wuse_shi",
+    "abyssredemptiondaomod:wudao_cha"
+  ],
+  "step": "underground_ores"
+}

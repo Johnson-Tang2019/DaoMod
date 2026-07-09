@@ -1,0 +1,10 @@
+{
+  "type": "abyssredemptiondaomod:xianyu_type",
+  "generator": {
+    "type": "minecraft:noise",
+    "biome_source": {
+      "type": "minecraft:the_end"
+    },
+    "settings": "minecraft:end"
+  }
+}

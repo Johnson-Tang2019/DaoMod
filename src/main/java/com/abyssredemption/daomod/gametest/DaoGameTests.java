@@ -2,6 +2,7 @@ package com.abyssredemption.daomod.gametest;
 
 import com.abyssredemption.daomod.AbsDaoMod;
 import com.abyssredemption.daomod.attachment.CultivationData;
+import com.abyssredemption.daomod.entity.DaoRegionalBossEntity;
 import com.abyssredemption.daomod.entity.LegendaryCultivatorEntity;
 import com.abyssredemption.daomod.entity.SectGuardianEntity;
 import com.abyssredemption.daomod.entity.SwordBeamEntity;
@@ -9,6 +10,9 @@ import com.abyssredemption.daomod.network.CultivationPayload;
 import com.abyssredemption.daomod.registry.ModAttachments;
 import com.abyssredemption.daomod.registry.ModBlocks;
 import com.abyssredemption.daomod.registry.ModEntities;
+import com.abyssredemption.daomod.registry.ModFeatures;
+import com.abyssredemption.daomod.world.DimensionKeys;
+import com.abyssredemption.daomod.world.DimensionRules;
 import com.abyssredemption.daomod.worldgen.SectOutpostFeature;
 import com.mojang.serialization.JsonOps;
 import io.netty.buffer.Unpooled;
@@ -85,6 +89,7 @@ public final class DaoGameTests {
     public static void allHostileEntitiesCreate(GameTestHelper helper) {
         Set<Integer> sects = new HashSet<>();
         Set<Integer> legends = new HashSet<>();
+        int regionalBosses = 0;
         try {
             for (var field : ModEntities.class.getFields()) {
                 if (!(field.get(null) instanceof DeferredHolder<?, ?> holder)
@@ -96,7 +101,15 @@ public final class DaoGameTests {
                 } else if (entity instanceof LegendaryCultivatorEntity legend) {
                     legends.add(legend.getLegend());
                     require(helper, legend.getMaxHealth() == LegendaryCultivatorEntity.maxHealthForLegend(
-                            legend.getLegend()), "Legend health must match its challenge realm");
+                                    legend.getLegend()) || entity instanceof com.abyssredemption.daomod.entity.DaoRegionalBossEntity,
+                            "Legend health must match its challenge realm");
+                    if (entity instanceof DaoRegionalBossEntity regional) {
+                        regionalBosses++;
+                        require(helper, regional.getVariant() >= 1 && regional.getVariant() <= 7,
+                                "Regional boss variant must stay in the documented range");
+                        require(helper, !regional.advancementId().isBlank(),
+                                "Regional boss must expose an advancement id");
+                    }
                 }
             }
         } catch (IllegalAccessException exception) {
@@ -105,9 +118,31 @@ public final class DaoGameTests {
         require(helper, sects.equals(Set.of(1, 2, 3, 4)), "All four sect guardians must create uniquely");
         require(helper, legends.size() == 25 && legends.contains(1) && legends.contains(25),
                 "All twenty-five legendary enemies must create uniquely");
+        require(helper, regionalBosses == 7, "All seven regional bosses must create");
         require(helper, LegendaryCultivatorEntity.maxHealthForLegend(1) == 240.0
                         && LegendaryCultivatorEntity.maxHealthForLegend(25) == 680.0,
                 "Legend health must rise across challenge groups");
+        require(helper, LegendaryCultivatorEntity.regionalAdvancementForLegend(2).equals("defeat_sword_remnant")
+                        && LegendaryCultivatorEntity.regionalAdvancementForLegend(18).equals("defeat_leize_jiao")
+                        && LegendaryCultivatorEntity.regionalAdvancementForLegend(25) == null,
+                "Regional boss advancements must stay bound to their legend stand-ins");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 20)
+    public static void bossStructurePlacesSealAndReward(GameTestHelper helper) {
+        BlockPos origin = helper.absolutePos(new BlockPos(12, 2, 12));
+        boolean placed = ModFeatures.BOSS_STRUCTURE.get().place(new FeaturePlaceContext<>(Optional.empty(),
+                helper.getLevel(), helper.getLevel().getChunkSource().getGenerator(), RandomSource.create(7), origin,
+                new com.abyssredemption.daomod.worldgen.boss.BossStructureConfiguration(2, 12, true)));
+        require(helper, placed, "Boss structure must place successfully");
+        require(helper, helper.getLevel().getBlockState(origin.below().offset(0, 1, 0)).is(ModBlocks.BOSS_SEAL.get()),
+                "Boss structure must contain a seal block");
+        require(helper, !helper.getLevel().getBlockState(origin.below().offset(0, 1, 0)).getValue(
+                        net.minecraft.world.level.block.state.properties.BlockStateProperties.POWERED),
+                "Boss seal must start inactive");
+        require(helper, helper.getLevel().getBlockEntity(origin.below().offset(0, 1, -8)) instanceof Container,
+                "Boss structure must contain a reward barrel");
         helper.succeed();
     }
 
@@ -144,6 +179,20 @@ public final class DaoGameTests {
                 "beiji_minghai", "guixu_shenhai", "xukong_tianwai")) {
             require(helper, biomes.containsKey(id(region)), "Missing setting biome: " + region);
         }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 20)
+    public static void dimensionRulesMatchCultivationLevels(GameTestHelper helper) {
+        require(helper, DimensionKeys.cultivationLevel(0, 0) == 1, "First stage must be level 1");
+        require(helper, DimensionKeys.cultivationLevel(8, 8) == 81, "Final stage must be level 81");
+        require(helper, DimensionRules.ruleFor(DimensionKeys.LINGXU).minLevel() == 14,
+                "Lingxu must require foundation mid-stage");
+        require(helper, DimensionRules.ruleFor(DimensionKeys.DILUOYUAN).cultivationMultiplier() == 4.5,
+                "Diluo Abyss must be a high-risk cultivation realm");
+        require(helper, DimensionRules.ruleFor(DimensionKeys.LINGXU_LEGACY).minLevel()
+                        == DimensionRules.ruleFor(DimensionKeys.LINGXU).minLevel(),
+                "Legacy Lingxu id must keep the same pressure rules");
         helper.succeed();
     }
 

@@ -53,5 +53,12 @@ public class ModClientEvents {
         event.registerEntityRenderer(ModEntities.HOUYI.get(), LegendaryCultivatorRenderer::new);
         event.registerEntityRenderer(ModEntities.XINGTIAN.get(), LegendaryCultivatorRenderer::new);
         event.registerEntityRenderer(ModEntities.XUANYUAN_FOURTEEN.get(), LegendaryCultivatorRenderer::new);
+        event.registerEntityRenderer(ModEntities.SHENTU_STELE_SPIRIT.get(), LegendaryCultivatorRenderer::new);
+        event.registerEntityRenderer(ModEntities.LEIZE_ANCIENT_DRAGON.get(), LegendaryCultivatorRenderer::new);
+        event.registerEntityRenderer(ModEntities.SWORD_TOMB_REMNANT.get(), LegendaryCultivatorRenderer::new);
+        event.registerEntityRenderer(ModEntities.FIRE_MANDRILL_KING.get(), LegendaryCultivatorRenderer::new);
+        event.registerEntityRenderer(ModEntities.MINGHAI_SOUL_FERRY_MONK.get(), LegendaryCultivatorRenderer::new);
+        event.registerEntityRenderer(ModEntities.GUIXU_MERFOLK_EMPEROR_ECHO.get(), LegendaryCultivatorRenderer::new);
+        event.registerEntityRenderer(ModEntities.VOID_DEMON_LARVA.get(), LegendaryCultivatorRenderer::new);
     }
 }

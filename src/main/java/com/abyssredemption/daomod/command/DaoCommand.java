@@ -5,6 +5,8 @@ import com.abyssredemption.daomod.AbsDaoMod;
 import com.abyssredemption.daomod.attachment.CultivationData;
 import com.abyssredemption.daomod.network.CultivationPayload;
 import com.abyssredemption.daomod.registry.ModAttachments;
+import com.abyssredemption.daomod.world.DimensionKeys;
+import com.abyssredemption.daomod.world.DimensionTravelHandler;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.LongArgumentType;
@@ -31,6 +33,14 @@ public class DaoCommand {
                         .then(Commands.argument("sect", IntegerArgumentType.integer(1, 4))
                                 .executes(context -> joinSect(
                                         context.getSource(), IntegerArgumentType.getInteger(context, "sect"))))));
+        dispatcher.register(Commands.literal("dao").requires(source -> source.hasPermission(2))
+                .then(Commands.literal("dimension")
+                        .then(Commands.literal("lingxu")
+                                .executes(context -> travelToDimension(context.getSource(), DimensionKeys.LINGXU)))
+                        .then(Commands.literal("diluoyuan")
+                                .executes(context -> travelToDimension(context.getSource(), DimensionKeys.DILUOYUAN)))
+                        .then(Commands.literal("xianyu")
+                                .executes(context -> travelToDimension(context.getSource(), DimensionKeys.XIANYU)))));
         // 注册qi命令
         dispatcher.register(Commands.literal("dao").requires(source -> source.hasPermission(2)) // 需要管理员权限
                 .then(Commands.literal("qi").then(Commands.literal("set")
@@ -261,6 +271,11 @@ public class DaoCommand {
         if (advancement != null) player.getAdvancements().award(advancement, "joined");
         source.sendSuccess(() -> Component.translatable("command.daomod.sect.joined", sectName(sect)), false);
         return 1;
+    }
+
+    private static int travelToDimension(CommandSourceStack source, net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> dimension)
+            throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+        return DimensionTravelHandler.travelTo(source.getPlayerOrException(), dimension) ? 1 : 0;
     }
 
     private static Component sectName(int sect) {

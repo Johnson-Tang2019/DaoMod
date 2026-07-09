@@ -10,6 +10,8 @@ import com.abyssredemption.daomod.registry.ModEffects;
 import com.abyssredemption.daomod.registry.ModItems;
 import com.abyssredemption.daomod.util.SpiritualAuraHelper;
 import com.abyssredemption.daomod.util.SwordFlightHelper;
+import com.abyssredemption.daomod.world.DimensionKeys;
+import com.abyssredemption.daomod.world.DimensionRules;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -206,7 +208,8 @@ public class ModEvent {
 
     private static void returnFromImmortalVoid(ServerPlayer player) {
         if (player.getY() >= player.level().getMinBuildHeight() - 16
-                || !player.level().dimension().location().getPath().equals("eternal_immortal_realm")) {
+                || (player.level().dimension() != DimensionKeys.XIANYU
+                && player.level().dimension() != DimensionKeys.XIANYU_LEGACY)) {
             return;
         }
         ServerLevel overworld = player.getServer().overworld();
@@ -300,7 +303,9 @@ public class ModEvent {
             return;
         }
 
-        float recoveryRate = data.getSect() == 2 ? 0.15f : 0.1f;
+        var rule = DimensionRules.ruleFor(player.level().dimension());
+        float recoveryRate = (float) ((data.getSect() == 2 ? 0.15f : 0.1f)
+                * (rule == null ? 1.0 : rule.qiRegenMultiplier()));
         int recoveryAmount = (int) (recoveryRate * maxQi);
         long nextQi = Math.min(currentQi + recoveryAmount, maxQi);
         data.setQi(nextQi);
@@ -328,7 +333,9 @@ public class ModEvent {
         }
 
         int auraConcentration = SpiritualAuraHelper.getConcentration(player);
-        int progressGain = SpiritualAuraHelper.getMeditationProgressGain(player);
+        var rule = DimensionRules.ruleFor(player.level().dimension());
+        int progressGain = (int) Math.max(1, SpiritualAuraHelper.getMeditationProgressGain(player)
+                * (rule == null ? 1.0 : rule.cultivationMultiplier()));
         increaseRealmProgress(player, progressGain);
         player.displayClientMessage(Component.translatable(
                 "message.abyssredemptiondaomod.meditation_progress", auraConcentration, progressGain), true);

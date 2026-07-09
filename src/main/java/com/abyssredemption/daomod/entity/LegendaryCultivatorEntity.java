@@ -90,7 +90,7 @@ public class LegendaryCultivatorEntity extends Monster {
                 ServerPlayer player = serverLevel.getServer().getPlayerList().getPlayer(uuid);
                 if (player != null && player.level() == serverLevel && player.distanceToSqr(this) <= 128.0 * 128.0) {
                     ModEvent.increaseRealmProgress(player, progress);
-                    awardGroupVictory(player, (legend - 1) / 5);
+                    awardGroupVictory(player, this);
                     player.displayClientMessage(Component.translatable(
                             "message.abyssredemptiondaomod.legendary_shared_reward", progress), false);
                 }
@@ -103,9 +103,42 @@ public class LegendaryCultivatorEntity extends Monster {
         return 12 + Math.max(0, Math.min(4, (legend - 1) / 5)) * 4;
     }
 
-    private static void awardGroupVictory(ServerPlayer player, int group) {
+    private static void awardGroupVictory(ServerPlayer player, LegendaryCultivatorEntity boss) {
+        int legend = boss.getLegend();
+        int group = (legend - 1) / 5;
         var advancement = player.getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(
                 "abyssredemptiondaomod", "legend_group_" + group));
+        if (advancement != null) {
+            player.getAdvancements().award(advancement, "complete");
+        }
+        if (group == 3) {
+            awardAdvancement(player, "defeat_emperor_remnant");
+        } else if (group == 4) {
+            awardAdvancement(player, "defeat_tiandao_avatar");
+        }
+        String regionalAdvancement = boss instanceof DaoRegionalBossEntity regional
+                ? regional.advancementId()
+                : regionalAdvancementForLegend(legend);
+        if (regionalAdvancement != null) {
+            awardAdvancement(player, regionalAdvancement);
+        }
+    }
+
+    public static String regionalAdvancementForLegend(int legend) {
+        return switch (legend) {
+            case 2 -> "defeat_sword_remnant";
+            case 12 -> "defeat_minghai_monk";
+            case 16 -> "defeat_void_demon";
+            case 18 -> "defeat_leize_jiao";
+            case 19 -> "defeat_guixu_king";
+            case 21 -> "defeat_fire_xiao_king";
+            default -> null;
+        };
+    }
+
+    private static void awardAdvancement(ServerPlayer player, String id) {
+        var advancement = player.getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(
+                "abyssredemptiondaomod", id));
         if (advancement != null) {
             player.getAdvancements().award(advancement, "complete");
         }

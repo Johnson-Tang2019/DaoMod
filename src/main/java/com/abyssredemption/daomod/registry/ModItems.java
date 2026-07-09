@@ -188,6 +188,9 @@ public class ModItems {
     public static final DeferredItem<BlockItem> LINGSHI_ORE_ITEM =
             ITEMS.registerSimpleBlockItem("lingshi_ore", ModBlocks.LINGSHI_ORE);
 
+    public static final DeferredItem<BlockItem> BOSS_SEAL_ITEM =
+            ITEMS.registerSimpleBlockItem("boss_seal", ModBlocks.BOSS_SEAL);
+
     // 3. 注册丹药
     public static final DeferredItem<DanItem> DAN =
             ITEMS.register("dan",

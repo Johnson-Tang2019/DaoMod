@@ -2,6 +2,8 @@ package com.abyssredemption.daomod.registry;
 
 import com.abyssredemption.daomod.AbsDaoMod;
 import com.abyssredemption.daomod.worldgen.SectOutpostFeature;
+import com.abyssredemption.daomod.worldgen.boss.BossStructureConfiguration;
+import com.abyssredemption.daomod.worldgen.boss.BossStructureFeature;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -21,6 +23,8 @@ public final class ModFeatures {
     public static final DeferredHolder<Feature<?>, SectOutpostFeature> UNDERWORLD_SHRINE = outpost("underworld_shrine", 7);
     public static final DeferredHolder<Feature<?>, SectOutpostFeature> VOID_OBSERVATORY = outpost("void_observatory", 8);
     public static final DeferredHolder<Feature<?>, SectOutpostFeature> ANCIENT_MONUMENT = outpost("ancient_monument", 9);
+    public static final DeferredHolder<Feature<?>, BossStructureFeature> BOSS_STRUCTURE =
+            FEATURES.register("boss_structure", () -> new BossStructureFeature(BossStructureConfiguration.CODEC));
 
     private static DeferredHolder<Feature<?>, SectOutpostFeature> outpost(String name, int sect) {
         return FEATURES.register(name, () -> new SectOutpostFeature(NoneFeatureConfiguration.CODEC, sect));
