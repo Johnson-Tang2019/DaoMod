@@ -1,6 +1,6 @@
 package com.abyssredemption.daomod.item;
 
-import com.abyssredemption.daomod.network.CultivationPayload;
+import com.abyssredemption.daomod.event.ModEvent;
 import com.abyssredemption.daomod.registry.ModAttachments;
 import com.abyssredemption.daomod.registry.ModEffects;
 import net.minecraft.network.chat.Component;
@@ -75,7 +75,8 @@ public class DanItem extends Item {
             var data = player.getData(ModAttachments.CULTIVATION);
 
             // 1. 增加 1 个小境界（stage）
-            data.setStage(data.getStage() + 1);
+            ModEvent.increaseRealmProgress(player, 100);
+            data = player.getData(ModAttachments.CULTIVATION);
 
             // 2. 丹毒处理：增加一层丹毒（用 sectOrthodoxy 存储）
             int danDu = data.getSectOrthodoxy() + 1;
@@ -98,16 +99,6 @@ public class DanItem extends Item {
             player.setData(ModAttachments.CULTIVATION, data);
 
             // 3. 同步数据到客户端
-            player.connection.send(new CultivationPayload(
-                    data.getRealm(),
-                    data.getQi(),
-                    data.getSectOrthodoxy(),
-                    data.getStage(),
-                    data.getRealmProgress(),
-                    data.getKarma(),
-                    data.getSect()
-            ));
-
             // 4. 发送突破提示
             player.displayClientMessage(Component.translatable("message.abyssredemptiondaomod.dan_consumed"), true);
         }

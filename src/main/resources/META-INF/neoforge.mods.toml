@@ -98,8 +98,8 @@ config="${mod_id}.mixins.json"
 
 [[dependencies.${mod_id}]]
     modId="ftbquests"
-    type="optional"
-    reason="Provides the optional Dao cultivation quest guide."
+    type="required"
+    reason="Provides the Dao cultivation quest guide packaged with this mod."
     versionRange="[2101.1.27,)"
     ordering="AFTER"
     side="BOTH"

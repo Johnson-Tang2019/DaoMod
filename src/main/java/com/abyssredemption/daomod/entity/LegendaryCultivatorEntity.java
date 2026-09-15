@@ -1,8 +1,8 @@
 package com.abyssredemption.daomod.entity;
 
 import com.abyssredemption.daomod.event.ModEvent;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -33,7 +33,7 @@ import net.minecraft.world.phys.Vec3;
 public class LegendaryCultivatorEntity extends Monster {
     private final int legend;
     private final ServerBossEvent bossEvent;
-    private final Set<UUID> contributors = new HashSet<>();
+    private final Map<UUID, Float> contributorDamage = new HashMap<>();
 
     public LegendaryCultivatorEntity(EntityType<? extends Monster> type, Level level, int legend) {
         super(type, level);
@@ -75,9 +75,11 @@ public class LegendaryCultivatorEntity extends Monster {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
+        float healthBefore = getHealth();
         boolean hurt = super.hurt(source, amount);
         if (hurt && source.getEntity() instanceof ServerPlayer player) {
-            contributors.add(player.getUUID());
+            float dealt = Math.max(0.0f, healthBefore - getHealth());
+            contributorDamage.merge(player.getUUID(), dealt, Float::sum);
         }
         return hurt;
     }
@@ -86,9 +88,12 @@ public class LegendaryCultivatorEntity extends Monster {
     public void die(DamageSource source) {
         if (level() instanceof ServerLevel serverLevel) {
             int progress = rewardProgress(legend);
-            for (UUID uuid : contributors) {
+            float minimumContribution = getMaxHealth() * 0.03f;
+            for (Map.Entry<UUID, Float> entry : contributorDamage.entrySet()) {
+                UUID uuid = entry.getKey();
                 ServerPlayer player = serverLevel.getServer().getPlayerList().getPlayer(uuid);
-                if (player != null && player.level() == serverLevel && player.distanceToSqr(this) <= 128.0 * 128.0) {
+                if (entry.getValue() >= minimumContribution && player != null && player.level() == serverLevel
+                        && player.distanceToSqr(this) <= 128.0 * 128.0) {
                     ModEvent.increaseRealmProgress(player, progress);
                     awardGroupVictory(player, this);
                     player.displayClientMessage(Component.translatable(
@@ -108,9 +113,7 @@ public class LegendaryCultivatorEntity extends Monster {
         int group = (legend - 1) / 5;
         var advancement = player.getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(
                 "abyssredemptiondaomod", "legend_group_" + group));
-        if (advancement != null) {
-            player.getAdvancements().award(advancement, "complete");
-        }
+        if (advancement != null) player.getAdvancements().award(advancement, "legend_" + legend);
         if (group == 3) {
             awardAdvancement(player, "defeat_emperor_remnant");
         } else if (group == 4) {

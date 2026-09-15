@@ -1,9 +1,9 @@
 package com.abyssredemption.daomod.block;
 
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
-import net.minecraft.world.entity.Marker;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -13,10 +13,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityMountEvent;
 
-import java.util.List;
-
+@EventBusSubscriber(modid = "abyssredemptiondaomod")
 public class PuTuan extends Block {
     public PuTuan(Properties properties) {
         super(properties);
@@ -59,10 +59,23 @@ public class PuTuan extends Block {
     @SubscribeEvent
     public static void onEntityDismount(EntityMountEvent event) {
         // 检查是否是我们的 Marker 座位
-        if (event.isDismounting() && event.getEntityBeingMounted() instanceof Marker seat) {
+        if (event.isDismounting() && event.getEntityBeingMounted() instanceof ArmorStand seat) {
             if (seat.getTags().contains("daomod_seat")) {
                 seat.discard();
             }
         }
+    }
+
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!state.is(newState.getBlock())) {
+            for (ArmorStand seat : level.getEntitiesOfClass(ArmorStand.class, new AABB(pos).inflate(0.2))) {
+                if (seat.getTags().contains("daomod_seat")) {
+                    seat.ejectPassengers();
+                    seat.discard();
+                }
+            }
+        }
+        super.onRemove(state, level, pos, newState, isMoving);
     }
 }

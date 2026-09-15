@@ -1,0 +1,23 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "cultivation_basics"
+	group: ""
+	icon: {count: 1, id: "abyssredemptiondaomod:putuan"}
+	id: "c000000000000001"
+	order_index: 1
+	quest_links: []
+	quests: [
+		{x:0.0d,y:0.0d,id:"c100000000000001",icon:{count:1,id:"abyssredemptiondaomod:cultivation_guide_book"},tasks:[{id:"d100000000000001",type:"item",item:{count:1,id:"abyssredemptiondaomod:cultivation_guide_book"}}]}
+		{x:2.5d,y:0.0d,id:"c200000000000001",dependencies:["c100000000000001"],icon:{count:1,id:"abyssredemptiondaomod:putuan"},tasks:[{id:"d200000000000001",type:"item",item:{count:1,id:"abyssredemptiondaomod:putuan"}}]}
+		{x:5.0d,y:-1.5d,id:"c300000000000001",dependencies:["c200000000000001"],icon:{count:1,id:"abyssredemptiondaomod:lingzhi_plant"},tasks:[{id:"d300000000000001",type:"item",item:{count:1,id:"abyssredemptiondaomod:lingzhi_plant"}}]}
+		{x:5.0d,y:1.5d,id:"c400000000000001",dependencies:["c200000000000001"],icon:{count:1,id:"abyssredemptiondaomod:lingshi_ore"},tasks:[{id:"d400000000000001",type:"item",item:{count:1,id:"abyssredemptiondaomod:lingshi_ore"}}]}
+		{x:7.5d,y:0.0d,id:"c500000000000001",dependencies:["c300000000000001","c400000000000001"],icon:{count:1,id:"minecraft:experience_bottle"},tasks:[{id:"d500000000000001",type:"item",item:{count:8,id:"minecraft:experience_bottle"}}],rewards:[{id:"9050000000000001",type:"xp_levels",xp_levels:2}]}
+		{x:10.0d,y:-1.5d,id:"c600000000000001",dependencies:["c500000000000001"],icon:{count:1,id:"abyssredemptiondaomod:wenling_dagger"},tasks:[{id:"d600000000000001",type:"item",item:{count:1,id:"abyssredemptiondaomod:wenling_dagger"}}]}
+		{x:10.0d,y:1.5d,id:"c700000000000001",dependencies:["c500000000000001"],icon:{count:1,id:"abyssredemptiondaomod:dan"},tasks:[{id:"d700000000000001",type:"item",item:{count:1,id:"abyssredemptiondaomod:dan"}}],rewards:[{id:"9070000000000001",type:"xp_levels",xp_levels:2}]}
+		{x:12.5d,y:0.0d,id:"c800000000000001",dependencies:["c600000000000001","c700000000000001"],icon:{count:1,id:"abyssredemptiondaomod:soul_sword"},tasks:[{id:"d800000000000001",type:"item",item:{count:1,id:"abyssredemptiondaomod:soul_sword"}}]}
+		{x:15.0d,y:-1.5d,id:"c900000000000001",dependencies:["c800000000000001"],icon:{count:1,id:"minecraft:elytra"},tasks:[{id:"d900000000000001",type:"item",item:{count:8,id:"minecraft:firework_rocket"}}],rewards:[{id:"9090000000000001",type:"xp_levels",xp_levels:3}]}
+		{x:15.0d,y:1.5d,id:"ca00000000000001",dependencies:["c800000000000001"],icon:{count:1,id:"minecraft:totem_of_undying"},tasks:[{id:"da00000000000001",type:"kill",entity:"minecraft:zombie",value:3L}],rewards:[{id:"90a0000000000001",type:"xp_levels",xp_levels:2}]}
+		{x:17.5d,y:0.0d,id:"cb00000000000001",dependencies:["c900000000000001","ca00000000000001"],icon:{count:1,id:"abyssredemptiondaomod:soul_sword"},tasks:[{id:"db00000000000001",type:"item",item:{count:8,id:"minecraft:golden_apple"}}],rewards:[{id:"90b0000000000001",type:"xp_levels",xp_levels:5}]}
+	]
+}

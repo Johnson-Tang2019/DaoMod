@@ -468,5 +468,6 @@
   "biome.abyssredemptiondaomod.beiji_minghai": "Northern Nether Sea",
   "biome.abyssredemptiondaomod.guixu_shenhai": "Guixu Deep Sea",
   "biome.abyssredemptiondaomod.xukong_tianwai": "Outer Void",
-  "message.abyssredemptiondaomod.immortal_void_return": "You fell from the Eternal Immortal Realm and slipped back into the Overworld"
+  "message.abyssredemptiondaomod.immortal_void_return": "You fell from the Eternal Immortal Realm and slipped back into the Overworld",
+  "message.abyssredemptiondaomod.dimension_locked": "%s requires cultivation level %s"
 }

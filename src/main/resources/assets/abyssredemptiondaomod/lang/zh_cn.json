@@ -468,5 +468,6 @@
   "biome.abyssredemptiondaomod.beiji_minghai": "北极冥海",
   "biome.abyssredemptiondaomod.guixu_shenhai": "归墟深海",
   "biome.abyssredemptiondaomod.xukong_tianwai": "虚空天外",
-  "message.abyssredemptiondaomod.immortal_void_return": "你坠出永恒仙域，沿空间裂隙跌回了主世界"
+  "message.abyssredemptiondaomod.immortal_void_return": "你坠出永恒仙域，沿空间裂隙跌回了主世界",
+  "message.abyssredemptiondaomod.dimension_locked": "%s需要修为等级%s"
 }

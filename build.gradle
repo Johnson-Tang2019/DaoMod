@@ -138,11 +138,11 @@ dependencies {
 }
 
 tasks.register('syncFtbQuestsClient', Sync) {
-    from 'config/ftbquests/quests'
+    from 'src/main/resources/defaultconfigs/ftbquests/quests'
     into 'runs/client/config/ftbquests/quests'
 }
 tasks.register('syncFtbQuestsServer', Sync) {
-    from 'config/ftbquests/quests'
+    from 'src/main/resources/defaultconfigs/ftbquests/quests'
     into 'runs/server/config/ftbquests/quests'
 }
 tasks.register('syncFtbQuests') {

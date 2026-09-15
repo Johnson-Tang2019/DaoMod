@@ -1,0 +1,23 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "realms"
+	group: ""
+	icon: {count: 1, id: "abyssredemptiondaomod:geshi_zhimen"}
+	id: "1100000000000001"
+	order_index: 3
+	quest_links: []
+	quests: [
+		{x:0.0d,y:0.0d,id:"1200000000000001",icon:{count:1,id:"abyssredemptiondaomod:geshi_zhimen"},tasks:[{id:"1300000000000001",type:"item",item:{count:1,id:"abyssredemptiondaomod:geshi_zhimen"}}]}
+		{x:3.0d,y:0.0d,id:"1400000000000001",dependencies:["1200000000000001"],icon:{count:1,id:"abyssredemptiondaomod:daoling_yu"},tasks:[{id:"1500000000000001",type:"dimension",dimension:"abyssredemptiondaomod:lingxu"}]}
+		{x:6.0d,y:-2.0d,id:"1600000000000001",dependencies:["1400000000000001"],icon:{count:1,id:"abyssredemptiondaomod:lingshi_ore"},tasks:[{id:"1700000000000001",type:"item",item:{count:3,id:"abyssredemptiondaomod:hantie_kuang"}},{id:"1710000000000001",type:"item",item:{count:3,id:"abyssredemptiondaomod:lihuo_chijin"}},{id:"1720000000000001",type:"item",item:{count:3,id:"abyssredemptiondaomod:gengjin_shenkuang"}},{id:"1730000000000001",type:"item",item:{count:3,id:"abyssredemptiondaomod:daoling_yu"}},{id:"1740000000000001",type:"item",item:{count:3,id:"abyssredemptiondaomod:xukong_jing"}}],rewards:[{id:"9210000000000001",type:"xp_levels",xp_levels:3}]}
+		{x:6.0d,y:2.0d,id:"1800000000000001",dependencies:["1400000000000001"],icon:{count:1,id:"minecraft:filled_map"},tasks:[{id:"1900000000000001",type:"item",item:{count:1,id:"abyssredemptiondaomod:ancient_bloodline_challenge"}}],rewards:[{id:"9220000000000001",type:"xp_levels",xp_levels:4}]}
+		{x:9.0d,y:0.0d,id:"1a00000000000001",dependencies:["1600000000000001","1800000000000001"],icon:{count:1,id:"abyssredemptiondaomod:xukong_jing"},tasks:[{id:"1b00000000000001",type:"dimension",dimension:"abyssredemptiondaomod:diluoyuan"}]}
+		{x:12.0d,y:-2.0d,id:"1c00000000000001",dependencies:["1a00000000000001"],icon:{count:1,id:"minecraft:fire_charge"},tasks:[{id:"1d00000000000001",type:"kill",entity:"minecraft:blaze",value:5L}],rewards:[{id:"9230000000000001",type:"xp_levels",xp_levels:5}]}
+		{x:12.0d,y:2.0d,id:"1e00000000000001",dependencies:["1a00000000000001"],icon:{count:1,id:"minecraft:respawn_anchor"},tasks:[{id:"1f00000000000001",type:"item",item:{count:1,id:"minecraft:respawn_anchor"}}],rewards:[{id:"9240000000000001",type:"xp_levels",xp_levels:5}]}
+		{x:15.0d,y:0.0d,id:"2100000000000001",dependencies:["1c00000000000001","1e00000000000001"],icon:{count:1,id:"abyssredemptiondaomod:butian_wuse_shi"},tasks:[{id:"2200000000000001",type:"dimension",dimension:"abyssredemptiondaomod:xianyu"}]}
+		{x:18.0d,y:-2.0d,id:"2300000000000001",dependencies:["2100000000000001"],icon:{count:1,id:"minecraft:end_stone"},tasks:[{id:"2400000000000001",type:"item",item:{count:64,id:"minecraft:end_stone"}}],rewards:[{id:"9250000000000001",type:"xp_levels",xp_levels:7}]}
+		{x:18.0d,y:2.0d,id:"2500000000000001",dependencies:["2100000000000001"],icon:{count:1,id:"minecraft:ender_pearl"},tasks:[{id:"2600000000000001",type:"item",item:{count:16,id:"minecraft:ender_pearl"}}],rewards:[{id:"9260000000000001",type:"xp_levels",xp_levels:7}]}
+		{x:21.0d,y:0.0d,id:"2700000000000001",dependencies:["2300000000000001","2500000000000001"],icon:{count:1,id:"minecraft:compass"},tasks:[{id:"2800000000000001",type:"dimension",dimension:"minecraft:overworld"}],rewards:[{id:"9270000000000001",type:"xp_levels",xp_levels:10}]}
+	]
+}

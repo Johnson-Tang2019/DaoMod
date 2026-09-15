@@ -18,6 +18,17 @@ public final class DimensionTravelHandler {
                 : isLingxu(player.level()) ? new ResourceTarget(DimensionKeys.DILUOYUAN, 17)
                 : isDiluoyuan(player.level()) ? new ResourceTarget(DimensionKeys.XIANYU, 48)
                 : new ResourceTarget(Level.OVERWORLD, 21);
+        DimensionRules.DimensionRule rule = DimensionRules.ruleFor(target.key());
+        if (rule != null) {
+            var cultivation = player.getData(com.abyssredemption.daomod.registry.ModAttachments.CULTIVATION);
+            int level = DimensionKeys.cultivationLevel(cultivation.getRealm(), cultivation.getStage());
+            if (level < rule.minLevel()) {
+                player.displayClientMessage(Component.translatable("message.abyssredemptiondaomod.dimension_locked",
+                        Component.translatable("dimension.abyssredemptiondaomod." + target.key().location().getPath()),
+                        rule.minLevel()), true);
+                return false;
+            }
+        }
         return travelTo(player, target);
     }
 

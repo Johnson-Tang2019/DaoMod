@@ -1,0 +1,21 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "sects"
+	group: ""
+	icon: {count: 1, id: "abyssredemptiondaomod:sword_attendant_spawn_egg"}
+	id: "e000000000000001"
+	order_index: 2
+	quest_links: []
+	quests: [
+		{x:0.0d,y:0.0d,id:"e100000000000001",icon:{count:1,id:"minecraft:written_book"},tasks:[{id:"f100000000000001",type:"item",item:{count:1,id:"abyssredemptiondaomod:cultivation_guide_book"}}],rewards:[{id:"9110000000000001",type:"xp_levels",xp_levels:1}]}
+		{x:3.0d,y:-4.5d,id:"e200000000000001",dependencies:["e100000000000001"],icon:{count:1,id:"abyssredemptiondaomod:sword_attendant_spawn_egg"},tasks:[{id:"f200000000000001",type:"item",item:{count:3,id:"abyssredemptiondaomod:jianyi_cao"}}],rewards:[{id:"9120000000000001",type:"xp_levels",xp_levels:1}]}
+		{x:3.0d,y:-1.5d,id:"e300000000000001",dependencies:["e100000000000001"],icon:{count:1,id:"abyssredemptiondaomod:creation_disciple_spawn_egg"},tasks:[{id:"f300000000000001",type:"item",item:{count:3,id:"abyssredemptiondaomod:zuixian_tao"}}],rewards:[{id:"9130000000000001",type:"xp_levels",xp_levels:1}]}
+		{x:3.0d,y:1.5d,id:"e400000000000001",dependencies:["e100000000000001"],icon:{count:1,id:"abyssredemptiondaomod:thunder_monk_spawn_egg"},tasks:[{id:"f400000000000001",type:"item",item:{count:3,id:"abyssredemptiondaomod:kurong_shen"}}],rewards:[{id:"9140000000000001",type:"xp_levels",xp_levels:1}]}
+		{x:3.0d,y:4.5d,id:"e500000000000001",dependencies:["e100000000000001"],icon:{count:1,id:"abyssredemptiondaomod:rakshasa_cultist_spawn_egg"},tasks:[{id:"f500000000000001",type:"item",item:{count:3,id:"abyssredemptiondaomod:qianji_yin"}}],rewards:[{id:"9150000000000001",type:"xp_levels",xp_levels:1}]}
+		{x:6.0d,y:0.0d,id:"e600000000000001",dependencies:["e200000000000001","e300000000000001","e400000000000001","e500000000000001"],dependency_requirement:"one_completed",icon:{count:1,id:"minecraft:name_tag"},tasks:[{id:"f600000000000001",type:"advancement",advancement:"abyssredemptiondaomod:join_sect",criterion:"joined"}]}
+		{x:9.0d,y:-2.0d,id:"e700000000000001",dependencies:["e600000000000001"],icon:{count:1,id:"minecraft:iron_sword"},tasks:[{id:"f700000000000001",type:"kill",entity:"abyssredemptiondaomod:rakshasa_cultist",value:1L}],rewards:[{id:"9170000000000001",type:"xp_levels",xp_levels:2}]}
+		{x:9.0d,y:2.0d,id:"e800000000000001",dependencies:["e600000000000001"],icon:{count:1,id:"minecraft:map"},tasks:[{id:"f800000000000001",type:"item",item:{count:1,id:"abyssredemptiondaomod:gengjin_shenkuang"}}],rewards:[{id:"9180000000000001",type:"xp_levels",xp_levels:3}]}
+		{x:12.0d,y:0.0d,id:"e900000000000001",dependencies:["e700000000000001","e800000000000001"],icon:{count:1,id:"minecraft:chest"},tasks:[{id:"f900000000000001",type:"item",item:{count:4,id:"abyssredemptiondaomod:daoling_yu"}}],rewards:[{id:"9190000000000001",type:"xp_levels",xp_levels:4}]}
+	]
+}

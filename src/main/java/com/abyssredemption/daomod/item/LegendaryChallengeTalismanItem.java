@@ -3,7 +3,9 @@ package com.abyssredemption.daomod.item;
 import com.abyssredemption.daomod.entity.LegendaryCultivatorEntity;
 import com.abyssredemption.daomod.registry.ModAttachments;
 import com.abyssredemption.daomod.registry.ModEntities;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -64,7 +66,7 @@ public class LegendaryChallengeTalismanItem extends Item {
             return InteractionResultHolder.fail(stack);
         }
 
-        EntityType<? extends LegendaryCultivatorEntity> type = selectType(level.random.nextInt(5));
+        EntityType<? extends LegendaryCultivatorEntity> type = selectType(selectLegendIndex(serverPlayer));
         LegendaryCultivatorEntity challenger = type.create(serverLevel);
         if (challenger == null) {
             return InteractionResultHolder.fail(stack);
@@ -94,6 +96,21 @@ public class LegendaryChallengeTalismanItem extends Item {
         var advancement = player.getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(
                 "abyssredemptiondaomod", "legend_group_" + (group - 1)));
         return advancement != null && player.getAdvancements().getOrStartProgress(advancement).isDone();
+    }
+
+    private int selectLegendIndex(ServerPlayer player) {
+        var advancement = player.getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(
+                "abyssredemptiondaomod", "legend_group_" + group));
+        if (advancement == null) {
+            return player.getRandom().nextInt(5);
+        }
+        var progress = player.getAdvancements().getOrStartProgress(advancement);
+        Set<String> completed = new HashSet<>();
+        progress.getCompletedCriteria().forEach(completed::add);
+        int[] remaining = java.util.stream.IntStream.range(0, 5)
+                .filter(index -> !completed.contains("legend_" + (group * 5 + index + 1)))
+                .toArray();
+        return remaining.length == 0 ? player.getRandom().nextInt(5) : remaining[player.getRandom().nextInt(remaining.length)];
     }
 
     private EntityType<? extends LegendaryCultivatorEntity> selectType(int index) {
